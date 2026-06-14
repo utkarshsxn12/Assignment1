@@ -14,7 +14,6 @@ export default function LoginPage() {
 
   const steps = [
     {
-      stepNumber: "Step 1",
       name: "Meera",
       role: "CSV Importer",
       assignmentQuery: "Meera: 'Clean up duplicates — but I want to approve changes.'",
@@ -24,7 +23,6 @@ export default function LoginPage() {
       badgeColor: "var(--color-primary)",
     },
     {
-      stepNumber: "Step 2",
       name: "Aisha",
       role: "Settlement Manager",
       assignmentQuery: "Aisha: 'I just want one number per person. Who pays whom, how much.'",
@@ -34,7 +32,6 @@ export default function LoginPage() {
       badgeColor: "var(--color-secondary)",
     },
     {
-      stepNumber: "Step 3",
       name: "Rohan",
       role: "Auditor",
       assignmentQuery: "Rohan: 'No magic numbers. I want to see exactly which expenses make that up.'",
@@ -44,7 +41,6 @@ export default function LoginPage() {
       badgeColor: "#10b981",
     },
     {
-      stepNumber: "Step 4",
       name: "Priya",
       role: "Trip Auditor",
       assignmentQuery: "Priya: 'Half the trip was in dollars. The sheet pretends 1 USD = 1 INR.'",
@@ -54,7 +50,6 @@ export default function LoginPage() {
       badgeColor: "#f59e0b",
     },
     {
-      stepNumber: "Step 5",
       name: "Sam",
       role: "Dynamic Member",
       assignmentQuery: "Sam: 'I moved in mid-April. Why would March electricity affect my balance?'",
@@ -64,7 +59,6 @@ export default function LoginPage() {
       badgeColor: "#8b5cf6",
     },
     {
-      stepNumber: "Step 6",
       name: "Dev",
       role: "Trip Guest Host",
       assignmentQuery: "Dev: 'Trip participant. Dev's friend Kabir joined trip split.'",
@@ -102,10 +96,10 @@ export default function LoginPage() {
           ⚡ sharedExpense Evaluation Gateway
         </div>
         <h1 style={{ fontSize: "2.5rem", fontWeight: 800, letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>
-          Interactive Evaluation Walkthrough
+          Flatmate Persona Portal
         </h1>
         <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", maxWidth: "650px", margin: "0 auto", lineHeight: "1.6" }}>
-          To verify that all requirements in the assignment guidelines are met, log in as the flatmates below in sequential order to run each test.
+          To inspect how each person's specific problem is resolved, log in as their persona below to view their active ledger, audits, and custom rules.
         </p>
       </div>
 
@@ -140,17 +134,8 @@ export default function LoginPage() {
               e.currentTarget.style.boxShadow = "none";
             }}
           >
-            {/* Step & Role Indicator Header */}
+            {/* Role Indicator Header */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ 
-                fontSize: "0.75rem", 
-                fontWeight: 700, 
-                color: s.badgeColor, 
-                textTransform: "uppercase", 
-                letterSpacing: "0.1em"
-              }}>
-                {s.stepNumber}
-              </span>
               <span className="badge badge-info" style={{ fontSize: "0.65rem", padding: "2px 8px" }}>
                 {s.role}
               </span>
@@ -227,7 +212,7 @@ export default function LoginPage() {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              Start Step →
+              Log in as {s.name} →
             </button>
           </div>
         ))}
