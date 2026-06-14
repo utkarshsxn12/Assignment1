@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Navbar from "@/components/Navbar";
 
 interface ImportRowData {
@@ -202,21 +202,35 @@ export default function ImportPage() {
         
         {/* Step 1: Upload / Load CSV */}
         {!session && !importReport && (
-          <div className="glass-card" style={{ padding: "2.5rem", textAlign: "center" }}>
-            <h1 style={{ marginBottom: "1rem", fontSize: "2rem", fontWeight: 800 }}>
-              📥 Interactive CSV Importer
+          <div className="glass-card" style={{ padding: "3.5rem 2rem", textAlign: "center", borderTop: "4px solid var(--color-primary)" }}>
+            <div style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "14px",
+              background: "rgba(99, 102, 241, 0.08)",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "2rem",
+              marginBottom: "1.5rem"
+            }}>
+              📥
+            </div>
+            <h1 style={{ marginBottom: "0.75rem", fontSize: "2rem", fontWeight: 800, color: "white" }}>
+              Interactive CSV Importer
             </h1>
-            <p style={{ color: "var(--color-text-secondary)", marginBottom: "2rem", maxWidth: "600px", margin: "0 auto 2rem" }}>
-              Upload the spreadsheet export `expenses_export.csv`. Our engine will detect 20+ types of data problems, propose resolutions, and let you approve everything before writing to the database.
+            <p style={{ color: "var(--text-secondary)", marginBottom: "2.5rem", maxWidth: "600px", margin: "0 auto 2.5rem", lineHeight: "1.6" }}>
+              Upload the flatmate spreadsheet export `expenses_export.csv`. Our evaluation engine will identify 20+ types of data anomalies and let you approve proposed resolutions before writing to the SQLite database.
             </p>
             
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
               <button 
                 onClick={loadDefaultCSV} 
                 className="btn btn-primary"
+                style={{ padding: "0.75rem 1.75rem", fontSize: "0.9rem", fontWeight: 600 }}
                 disabled={loading}
               >
-                {loading ? "Parsing..." : "⚡ Auto-Load `expenses_export.csv`"}
+                {loading ? "Parsing spreadsheet..." : "⚡ Auto-Load & Stage `expenses_export.csv`"}
               </button>
             </div>
           </div>
@@ -227,39 +241,39 @@ export default function ImportPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             
             {/* Session Stats */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center" }}>
-                <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>Spreadsheet File</div>
-                <div style={{ fontSize: "1.25rem", fontWeight: 700, marginTop: "4px" }}>{session.filename}</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Spreadsheet File</div>
+                <div style={{ fontSize: "1.15rem", fontWeight: 700, marginTop: "6px", color: "white" }}>{session.filename}</div>
               </div>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center", borderLeft: "4px solid var(--color-secondary)" }}>
-                <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>Total Rows</div>
-                <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--color-text-primary)", marginTop: "4px" }}>{totalRows}</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Total Rows</div>
+                <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "white", marginTop: "4px" }}>{totalRows}</div>
               </div>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center", borderLeft: "4px solid var(--color-success)" }}>
-                <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>Clean Rows</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Clean Rows</div>
                 <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--color-success)", marginTop: "4px" }}>{cleanRows}</div>
               </div>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center", borderLeft: "4px solid var(--color-warning)" }}>
-                <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>Anomaly Rows</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Anomaly Rows</div>
                 <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--color-warning)", marginTop: "4px" }}>{anomalyRows}</div>
               </div>
             </div>
 
             {/* Interactive Grid */}
-            <div className="glass-card" style={{ padding: "1.5rem" }}>
-              <div style={{ display: "flex", justifyContent: "between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "1rem" }}>
+            <div className="glass-card" style={{ padding: "1.75rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.75rem", flexWrap: "wrap", gap: "1rem" }}>
                 <div>
-                  <h2 style={{ fontSize: "1.25rem", fontWeight: 700 }}>Staging Import Area</h2>
-                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-secondary)" }}>Review rows, toggle duplicates, check resolutions, and apply changes.</p>
+                  <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "white" }}>Staging Import Area</h2>
+                  <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Review parsed transactions, resolve duplicates, verify conversion rates, and import.</p>
                 </div>
                 <button 
                   onClick={executeImport} 
                   className="btn btn-primary"
-                  style={{ marginLeft: "auto" }}
+                  style={{ fontWeight: 600 }}
                   disabled={loading}
                 >
-                  {loading ? "Writing to DB..." : "✅ Approve & Import Staging"}
+                  {loading ? "Writing to DB..." : "✅ Approve & Ingest Staging"}
                 </button>
               </div>
 
@@ -267,14 +281,14 @@ export default function ImportPage() {
                 <table className="custom-table">
                   <thead>
                     <tr>
-                      <th style={{ width: "80px" }}>Row</th>
+                      <th style={{ width: "70px" }}>Row</th>
                       <th style={{ width: "80px" }}>Import?</th>
-                      <th style={{ width: "120px" }}>Date</th>
+                      <th style={{ width: "110px" }}>Date</th>
                       <th>Description</th>
                       <th>Paid By</th>
-                      <th style={{ textAlign: "right" }}>Amount</th>
-                      <th>Split Type</th>
-                      <th>Status / Anomalies</th>
+                      <th style={{ textAlign: "right", width: "130px" }}>Amount</th>
+                      <th>Split Details</th>
+                      <th style={{ width: "150px" }}>Status / Anomalies</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -285,18 +299,17 @@ export default function ImportPage() {
                       const isExpanded = expandedRow === row.id;
 
                       return (
-                        <>
+                        <Fragment key={row.id}>
                           <tr 
-                            key={row.id} 
                             style={{ 
                               cursor: "pointer",
-                              opacity: !isImporting ? 0.4 : 1,
+                              opacity: !isImporting ? 0.45 : 1,
                               textDecoration: !isImporting ? "line-through" : "none",
-                              background: isExpanded ? "rgba(124, 58, 237, 0.04)" : "transparent"
+                              background: isExpanded ? "rgba(99, 102, 241, 0.04)" : "transparent"
                             }}
                             onClick={() => setExpandedRow(isExpanded ? null : row.id)}
                           >
-                            <td>#{row.rowNumber}</td>
+                            <td style={{ fontWeight: 600, color: "var(--text-secondary)" }}>#{row.rowNumber}</td>
                             <td onClick={(e) => e.stopPropagation()}>
                               <input 
                                 type="checkbox" 
@@ -307,15 +320,15 @@ export default function ImportPage() {
                             </td>
                             <td>
                               {hasAnomalies && row.anomalies.some(a => a.field === "date") ? (
-                                <span style={{ color: "var(--color-warning)" }}>{currentResolved.date}</span>
+                                <span style={{ color: "var(--color-warning)", fontWeight: 600 }}>{currentResolved.date}</span>
                               ) : (
                                 currentResolved.date
                               )}
                             </td>
                             <td>
-                              <div><strong>{currentResolved.description}</strong></div>
+                              <div><strong style={{ color: "white" }}>{currentResolved.description}</strong></div>
                               {currentResolved.notes && (
-                                <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+                                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "2px" }}>
                                   📝 {currentResolved.notes}
                                 </div>
                               )}
@@ -326,7 +339,7 @@ export default function ImportPage() {
                                   value={currentResolved.paidBy} 
                                   onChange={(e) => handleValueChange(row.id, "paidBy", e.target.value)}
                                   className="form-select"
-                                  style={{ width: "90px", padding: "4px 8px", fontSize: "0.8rem", border: "1px solid var(--color-warning)" }}
+                                  style={{ width: "95px", padding: "4px 8px", fontSize: "0.8rem", border: "1px solid var(--color-warning)" }}
                                 >
                                   <option value="Aisha">Aisha</option>
                                   <option value="Rohan">Rohan</option>
@@ -341,15 +354,15 @@ export default function ImportPage() {
                             </td>
                             <td style={{ textAlign: "right", fontWeight: 600 }} onClick={(e) => e.stopPropagation()}>
                               {currentResolved.currency === "USD" ? (
-                                <div>
-                                  <div style={{ fontSize: "0.85rem", color: "var(--color-secondary)", fontWeight: 700 }}>
+                                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                                  <span style={{ fontSize: "0.85rem", color: "var(--color-secondary)", fontWeight: 700 }}>
                                     ${(currentResolved.amount / 100).toFixed(2)}
-                                  </div>
-                                  <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
+                                  </span>
+                                  <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>
                                     ₹{((currentResolved.amount / 100) * currentResolved.exchangeRate).toFixed(0)}
-                                  </div>
-                                  <div style={{ display: "flex", alignItems: "center", gap: "2px", justifyContent: "flex-end", marginTop: "2px" }}>
-                                    <span style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>Rate:</span>
+                                  </span>
+                                  <div style={{ display: "flex", alignItems: "center", gap: "4px", justifyContent: "flex-end", marginTop: "2px" }}>
+                                    <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", fontWeight: 500 }}>Rate:</span>
                                     <input 
                                       type="number" 
                                       value={currentResolved.exchangeRate}
@@ -361,38 +374,38 @@ export default function ImportPage() {
                                   </div>
                                 </div>
                               ) : (
-                                `₹${(currentResolved.amount / 100).toFixed(2)}`
+                                <span style={{ color: "white" }}>₹{(currentResolved.amount / 100).toFixed(2)}</span>
                               )}
                             </td>
                             <td>
-                              <span className="badge badge-info">{currentResolved.splitType}</span>
-                              <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", marginTop: "2px" }}>
-                                {currentResolved.splitWith.join("; ")}
+                              <span className="badge badge-info" style={{ fontSize: "0.65rem", padding: "2px 6px" }}>{currentResolved.splitType}</span>
+                              <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "3px" }}>
+                                {currentResolved.splitWith.join(", ")}
                               </div>
                             </td>
                             <td>
                               {hasAnomalies ? (
-                                <span className="badge badge-warning" style={{ fontSize: "0.75rem" }}>
+                                <span className="badge badge-warning" style={{ fontSize: "0.7rem", display: "inline-flex", gap: "4px", padding: "3px 8px" }}>
                                   ⚠️ {row.anomalies.length} Issues {isExpanded ? "▲" : "▼"}
                                 </span>
                               ) : (
-                                <span className="badge badge-success">Clean Row</span>
+                                <span className="badge badge-success" style={{ fontSize: "0.7rem", padding: "3px 8px" }}>Clean Row</span>
                               )}
                             </td>
                           </tr>
                           
                           {/* Expanded Details Sub-Row */}
                           {isExpanded && (
-                            <tr key={row.id + "-detail"} style={{ background: "rgba(15, 23, 42, 0.45)" }}>
-                              <td colSpan={8} style={{ padding: "1.25rem", borderBottom: "1px solid var(--border-glass-hover)" }}>
-                                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                                  <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
-                                    <strong>Raw CSV Line:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,0,0.2)", padding: "2px 6px", borderRadius: "4px" }}>{row.rawLine}</code>
+                            <tr style={{ background: "rgba(3, 7, 18, 0.45)" }}>
+                              <td colSpan={8} style={{ padding: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                                  <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
+                                    <strong>Raw CSV Segment:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,0,0.3)", padding: "4px 8px", borderRadius: "6px", color: "var(--color-primary-hover)", border: "1px solid rgba(255,255,255,0.04)" }}>{row.rawLine}</code>
                                   </div>
                                   
                                   {hasAnomalies && (
                                     <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "4px" }}>
-                                      <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-warning)" }}>Detected Issues:</div>
+                                      <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-warning)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Detected Anomaly Alerts</div>
                                       {row.anomalies.map((a, idx) => (
                                         <div 
                                           key={idx} 
@@ -400,14 +413,14 @@ export default function ImportPage() {
                                             fontSize: "0.8rem", 
                                             background: a.severity === "error" ? "var(--color-error-bg)" : "var(--color-warning-bg)",
                                             color: a.severity === "error" ? "var(--color-error)" : "var(--color-warning)",
-                                            padding: "8px 12px",
-                                            borderRadius: "6px",
-                                            border: `1px solid ${a.severity === "error" ? "rgba(239,68,68,0.25)" : "rgba(245,158,11,0.25)"}`
+                                            padding: "10px 14px",
+                                            borderRadius: "8px",
+                                            border: `1px solid ${a.severity === "error" ? "rgba(239,68,68,0.15)" : "rgba(245,158,11,0.15)"}`
                                           }}
                                         >
                                           <strong>{a.type.toUpperCase()}:</strong> {a.message}
-                                          <div style={{ fontSize: "0.75rem", opacity: 0.9, marginTop: "4px", fontWeight: 500 }}>
-                                            💡 Proposed Resolution: {a.proposedResolution}
+                                          <div style={{ fontSize: "0.75rem", opacity: 0.85, marginTop: "4px", fontWeight: 600 }}>
+                                            💡 Proposed Action: {a.proposedResolution}
                                           </div>
                                         </div>
                                       ))}
@@ -415,15 +428,15 @@ export default function ImportPage() {
                                   )}
                                   
                                   {row.splitDetails && (
-                                    <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
-                                      <strong>Raw Split Details:</strong> <code>{row.splitDetails || "None"}</code>
+                                    <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
+                                      <strong>Raw Split Details:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,0,0.15)", padding: "2px 6px", borderRadius: "4px" }}>{row.splitDetails || "None"}</code>
                                     </div>
                                   )}
                                 </div>
                               </td>
                             </tr>
                           )}
-                        </>
+                        </Fragment>
                       );
                     })}
                   </tbody>
@@ -435,42 +448,42 @@ export default function ImportPage() {
 
         {/* Step 3: SUCCESS & IMPORT REPORT DISPLAY */}
         {importReport && importStats && (
-          <div className="glass-card" style={{ padding: "2.5rem" }}>
-            <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-              <span style={{ fontSize: "3.5rem" }}>🎉</span>
-              <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "var(--color-success)", marginTop: "0.5rem" }}>
-                Import Completed Successfully!
+          <div className="glass-card" style={{ padding: "3rem 2rem", borderTop: "4px solid var(--color-success)" }}>
+            <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+              <span style={{ fontSize: "3rem" }}>🎉</span>
+              <h1 style={{ fontSize: "1.85rem", fontWeight: 800, color: "var(--color-success)", marginTop: "0.75rem" }}>
+                Import Completed Successfully
               </h1>
-              <p style={{ color: "var(--color-text-secondary)", marginTop: "0.5rem" }}>
-                Relational database has been populated with cleaned transactions.
+              <p style={{ color: "var(--text-secondary)", marginTop: "0.5rem" }}>
+                The relational database splits have been populated with validated and cleaned transactions.
               </p>
               
-              <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginTop: "1.5rem" }}>
+              <div style={{ display: "flex", justifyContent: "center", gap: "3rem", marginTop: "2rem" }}>
                 <div>
-                  <div style={{ fontSize: "2rem", fontWeight: 800, color: "var(--color-success)" }}>
+                  <div style={{ fontSize: "2.25rem", fontWeight: 800, color: "var(--color-success)" }}>
                     {importStats.imported}
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
-                    Transactions Imported
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em", marginTop: "4px" }}>
+                    Imported Records
                   </div>
                 </div>
-                <div style={{ borderRight: "1px solid var(--border-glass)" }}></div>
+                <div style={{ borderRight: "1px solid rgba(255,255,255,0.08)" }}></div>
                 <div>
-                  <div style={{ fontSize: "2rem", fontWeight: 800, color: "var(--color-text-secondary)" }}>
+                  <div style={{ fontSize: "2.25rem", fontWeight: 800, color: "var(--text-secondary)" }}>
                     {importStats.skipped}
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
-                    Duplicates/Refunds Skipped
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em", marginTop: "4px" }}>
+                    Skipped Duplicates
                   </div>
                 </div>
               </div>
             </div>
 
-            <hr style={{ border: "none", borderBottom: "1px solid var(--border-glass)", marginBottom: "2rem" }} />
+            <hr style={{ border: "none", borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "2rem" }} />
 
             <div>
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem" }}>
-                📋 Import Report (Anomaly & Action Resolution Log)
+              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem", color: "white" }}>
+                📋 Import Audit Trail Report (JSON Format Available)
               </h2>
               
               <div style={{ display: "flex", gap: "10px", marginBottom: "1.5rem" }}>
@@ -481,9 +494,9 @@ export default function ImportPage() {
                     alert("Import Report copied to clipboard!");
                   }}
                   className="btn btn-secondary"
-                  style={{ fontSize: "0.8rem", padding: "6px 12px" }}
+                  style={{ fontSize: "0.8rem", padding: "6px 12px", fontWeight: 600 }}
                 >
-                  📋 Copy JSON Report
+                  📋 Copy JSON Log
                 </button>
                 <button 
                   onClick={() => {
@@ -495,9 +508,9 @@ export default function ImportPage() {
                     element.click();
                   }}
                   className="btn btn-secondary"
-                  style={{ fontSize: "0.8rem", padding: "6px 12px" }}
+                  style={{ fontSize: "0.8rem", padding: "6px 12px", fontWeight: 600 }}
                 >
-                  💾 Download JSON Report
+                  💾 Download JSON Log
                 </button>
                 <button 
                   onClick={() => {
@@ -505,42 +518,42 @@ export default function ImportPage() {
                     setSession(null);
                   }}
                   className="btn btn-primary"
-                  style={{ fontSize: "0.8rem", padding: "6px 12px", marginLeft: "auto" }}
+                  style={{ fontSize: "0.8rem", padding: "6px 12px", marginLeft: "auto", fontWeight: 600 }}
                 >
                   Import Another CSV
                 </button>
               </div>
 
               <div className="table-container" style={{ maxHeight: "400px" }}>
-                <table className="custom-table">
+                <table className="custom-table" style={{ fontSize: "0.85rem" }}>
                   <thead>
                     <tr>
-                      <th style={{ width: "80px" }}>Row</th>
-                      <th>Expense Description</th>
-                      <th>Anomalies Detected</th>
-                      <th>Resolution Taken</th>
+                      <th style={{ width: "70px" }}>Row</th>
+                      <th>Description</th>
+                      <th>Anomalies Logged</th>
+                      <th style={{ width: "200px" }}>Resolution Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {importReport.map((row, idx) => (
                       <tr key={idx}>
-                        <td>#{row.rowNumber}</td>
-                        <td><strong>{row.description}</strong></td>
+                        <td style={{ fontWeight: 600, color: "var(--text-secondary)" }}>#{row.rowNumber}</td>
+                        <td><strong style={{ color: "white" }}>{row.description}</strong></td>
                         <td>
                           {row.anomalies.length > 0 ? (
                             <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                               {row.anomalies.map((a: any, aIdx: number) => (
-                                <div key={aIdx} style={{ fontSize: "0.75rem", color: a.severity === "error" ? "var(--color-error)" : "var(--color-warning)" }}>
+                                <div key={aIdx} style={{ fontSize: "0.75rem", color: a.severity === "error" ? "var(--color-error)" : "var(--color-warning)", fontWeight: 500 }}>
                                   ⚠️ {a.type}: {a.message}
                                 </div>
                               ))}
                             </div>
                           ) : (
-                            <span style={{ fontSize: "0.75rem", color: "var(--color-success)" }}>None (Clean Row)</span>
+                            <span style={{ fontSize: "0.75rem", color: "var(--color-success)", fontWeight: 500 }}>None (Clean Transaction)</span>
                           )}
                         </td>
                         <td>
-                          <span style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "var(--color-text-secondary)" }}>
+                          <span style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "var(--text-secondary)", background: "rgba(255,255,255,0.03)", padding: "2px 6px", borderRadius: "4px", border: "1px solid rgba(255,255,255,0.04)" }}>
                             {row.actionTaken}
                           </span>
                         </td>
