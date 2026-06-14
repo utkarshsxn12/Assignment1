@@ -29,7 +29,7 @@
   
   --color-info-bg: #f0f9ff;
   
-  --bg-navbar: rgba(255, 255, 255, 0.75);
+  --bg-navbar: rgba(248, 250, 252, 0.96);
   --navbar-highlight: rgba(255, 255, 255, 0.9);
   --card-highlight: rgba(255, 255, 255, 0.6);
   --card-highlight-hover: rgba(255, 255, 255, 0.9);
@@ -58,7 +58,7 @@
     --color-error-bg: rgba(225, 29, 72, 0.1);
     --color-info-bg: rgba(14, 165, 233, 0.1);
     
-    --bg-navbar: rgba(17, 24, 39, 0.75);
+    --bg-navbar: rgba(11, 15, 25, 0.96);
     --navbar-highlight: rgba(255, 255, 255, 0.05);
     --card-highlight: rgba(255, 255, 255, 0.03);
     --card-highlight-hover: rgba(255, 255, 255, 0.08);
@@ -147,13 +147,13 @@ body {
 }
 
 .btn-secondary {
-  background-color: #ffffff;
+  background-color: var(--bg-card);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 .btn-secondary:hover {
-  background-color: #f8fafc;
+  background-color: var(--bg-card-hover);
   border-color: var(--border-color-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
