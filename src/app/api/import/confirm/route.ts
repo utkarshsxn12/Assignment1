@@ -193,6 +193,8 @@ export async function POST(req: NextRequest) {
         where: { id: sessionId },
         data: { status: "completed" },
       });
+    }, {
+      timeout: 30000 // 30 seconds to allow remote database network latency
     });
 
     return NextResponse.json({
