@@ -33,7 +33,7 @@ export default function Navbar() {
     return (
       <nav className="app-navbar glass-card" style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}>
         <div className="app-logo" style={{ fontSize: "1.25rem", fontWeight: 900 }}>
-          ⚡ SplitSync
+          ⚡ sharedExpense
         </div>
       </nav>
     );
@@ -47,7 +47,7 @@ export default function Navbar() {
             background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
-          }}>⚡ SplitSync</span>
+          }}>⚡ sharedExpense</span>
         </Link>
       </div>
       

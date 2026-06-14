@@ -40,7 +40,7 @@ export default function Home() {
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent"
         }}>
-          SplitSync Flatmate Expenses
+          sharedExpense Flatmate Expenses
         </h1>
         
         <p style={{ 

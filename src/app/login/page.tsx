@@ -99,7 +99,7 @@ export default function LoginPage() {
           color: "var(--color-primary-hover)",
           marginBottom: "1rem"
         }}>
-          ⚡ SplitSync Evaluation Gateway
+          ⚡ sharedExpense Evaluation Gateway
         </div>
         <h1 style={{ fontSize: "2.5rem", fontWeight: 800, letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>
           Interactive Evaluation Walkthrough
