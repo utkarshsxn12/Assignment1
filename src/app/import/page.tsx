@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Fragment } from "react";
 import Navbar from "@/components/Navbar";
+import WalkthroughGuide from "@/components/WalkthroughGuide";
 
 interface ImportRowData {
   id: string;
@@ -197,6 +198,7 @@ export default function ImportPage() {
   return (
     <div className="app-container">
       <Navbar />
+      <WalkthroughGuide />
       
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         

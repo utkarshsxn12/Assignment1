@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import WalkthroughGuide from "@/components/WalkthroughGuide";
 
 interface User {
   id: string;
@@ -279,6 +280,7 @@ export default function ExpensesPage() {
   return (
     <div className="app-container">
       <Navbar />
+      <WalkthroughGuide />
 
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         

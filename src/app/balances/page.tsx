@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import WalkthroughGuide from "@/components/WalkthroughGuide";
 
 interface UserBalance {
   userId: string;
@@ -109,6 +110,7 @@ export default function BalancesPage() {
   return (
     <div className="app-container">
       <Navbar />
+      <WalkthroughGuide />
 
       {loading ? (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "6rem 0", gap: "1rem" }}>
