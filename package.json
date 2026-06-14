@@ -10,7 +10,9 @@
     "test": "node --import tsx --test src/__tests__/importer.test.ts"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@prisma/adapter-better-sqlite3": "^7.8.0",
+    "@prisma/adapter-neon": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "better-sqlite3": "^12.10.1",
     "next": "16.2.9",

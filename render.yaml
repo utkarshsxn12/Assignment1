@@ -7,8 +7,4 @@ services:
     startCommand: npx prisma db push && node prisma/seed.js && npm run start
     envVars:
       - key: DATABASE_URL
-        value: file:/var/data/dev.db
-    disk:
-      name: splitsync-sqlite-volume
-      mountPath: /var/data
-      sizeGB: 1
+        sync: false

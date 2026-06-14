@@ -1,10 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
-const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+const { PrismaNeon } = require("@prisma/adapter-neon");
 
-const url = process.env.DATABASE_URL || "file:./dev.db";
-console.log("Using database URL for seeding:", url);
-
-const adapter = new PrismaBetterSqlite3({ url });
+const connectionString = process.env.DATABASE_URL || "postgresql://dummy:dummy@localhost:5432/dummy";
+const adapter = new PrismaNeon({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
