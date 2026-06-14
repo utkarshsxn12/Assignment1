@@ -34,21 +34,18 @@ export default function Navbar() {
         <Link 
           href="/import" 
           className={`nav-link ${pathname === "/import" ? "active" : ""}`}
-          style={pathname === "/import" ? { color: "var(--color-primary)", fontWeight: "bold" } : {}}
         >
           📥 Import CSV
         </Link>
         <Link 
           href="/balances" 
           className={`nav-link ${pathname === "/balances" ? "active" : ""}`}
-          style={pathname === "/balances" ? { color: "var(--color-primary)", fontWeight: "bold" } : {}}
         >
           ⚖️ Balances
         </Link>
         <Link 
           href="/expenses" 
           className={`nav-link ${pathname === "/expenses" ? "active" : ""}`}
-          style={pathname === "/expenses" ? { color: "var(--color-primary)", fontWeight: "bold" } : {}}
         >
           💸 Group Expenses
         </Link>

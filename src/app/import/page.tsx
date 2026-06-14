@@ -51,6 +51,7 @@ export default function ImportPage() {
   const [resolutions, setResolutions] = useState<Record<string, { action: "import" | "skip"; resolvedData?: any }>>({});
   const [importReport, setImportReport] = useState<any[] | null>(null);
   const [importStats, setImportStats] = useState<{ imported: number; skipped: number } | null>(null);
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
   // Auto-detect duplicate pairs and pre-populate duplicate skips
   // e.g. for row 5 and 6, skip row 6 (default proposal)
@@ -281,113 +282,148 @@ export default function ImportPage() {
                       const isImporting = resolutions[row.id]?.action === "import";
                       const currentResolved = resolutions[row.id]?.resolvedData || row.resolvedData;
                       const hasAnomalies = row.anomalies.length > 0;
+                      const isExpanded = expandedRow === row.id;
 
                       return (
-                        <tr 
-                          key={row.id} 
-                          style={!isImporting ? { opacity: 0.4, textDecoration: "line-through" } : {}}
-                        >
-                          <td>#{row.rowNumber}</td>
-                          <td>
-                            <input 
-                              type="checkbox" 
-                              checked={isImporting} 
-                              onChange={() => handleActionToggle(row.id)}
-                              style={{ width: "18px", height: "18px", cursor: "pointer" }}
-                            />
-                          </td>
-                          <td>
-                            {hasAnomalies && row.anomalies.some(a => a.field === "date") ? (
-                              <span style={{ color: "var(--color-warning)" }}>{currentResolved.date}</span>
-                            ) : (
-                              currentResolved.date
-                            )}
-                          </td>
-                          <td>
-                            <div>{currentResolved.description}</div>
-                            {currentResolved.notes && (
-                              <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
-                                📝 {currentResolved.notes}
-                              </div>
-                            )}
-                          </td>
-                          <td>
-                            {hasAnomalies && row.anomalies.some(a => a.field === "paidBy") ? (
-                              <select 
-                                value={currentResolved.paidBy} 
-                                onChange={(e) => handleValueChange(row.id, "paidBy", e.target.value)}
-                                className="form-select"
-                                style={{ width: "100px", padding: "4px 8px", fontSize: "0.8rem", border: "1px solid var(--color-warning)" }}
-                              >
-                                <option value="Aisha">Aisha</option>
-                                <option value="Rohan">Rohan</option>
-                                <option value="Priya">Priya</option>
-                                <option value="Meera">Meera</option>
-                                <option value="Dev">Dev</option>
-                                <option value="Sam">Sam</option>
-                              </select>
-                            ) : (
-                              currentResolved.paidBy
-                            )}
-                          </td>
-                          <td style={{ textAlign: "right", fontWeight: 600 }}>
-                            {currentResolved.currency === "USD" ? (
-                              <div>
-                                <div style={{ fontSize: "0.85rem", color: "var(--color-secondary)" }}>
-                                  ${(currentResolved.amount / 100).toFixed(2)}
+                        <>
+                          <tr 
+                            key={row.id} 
+                            style={{ 
+                              cursor: "pointer",
+                              opacity: !isImporting ? 0.4 : 1,
+                              textDecoration: !isImporting ? "line-through" : "none",
+                              background: isExpanded ? "rgba(124, 58, 237, 0.04)" : "transparent"
+                            }}
+                            onClick={() => setExpandedRow(isExpanded ? null : row.id)}
+                          >
+                            <td>#{row.rowNumber}</td>
+                            <td onClick={(e) => e.stopPropagation()}>
+                              <input 
+                                type="checkbox" 
+                                checked={isImporting} 
+                                onChange={() => handleActionToggle(row.id)}
+                                style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                              />
+                            </td>
+                            <td>
+                              {hasAnomalies && row.anomalies.some(a => a.field === "date") ? (
+                                <span style={{ color: "var(--color-warning)" }}>{currentResolved.date}</span>
+                              ) : (
+                                currentResolved.date
+                              )}
+                            </td>
+                            <td>
+                              <div><strong>{currentResolved.description}</strong></div>
+                              {currentResolved.notes && (
+                                <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+                                  📝 {currentResolved.notes}
                                 </div>
-                                <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
-                                  ₹{((currentResolved.amount / 100) * currentResolved.exchangeRate).toFixed(0)}
-                                </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "2px", justifyContent: "flex-end", marginTop: "2px" }}>
-                                  <span style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>Rate:</span>
-                                  <input 
-                                    type="number" 
-                                    value={currentResolved.exchangeRate}
-                                    step="0.1"
-                                    onChange={(e) => handleValueChange(row.id, "exchangeRate", e.target.value)}
-                                    className="form-input"
-                                    style={{ width: "50px", padding: "2px 4px", fontSize: "0.75rem", textAlign: "right" }}
-                                  />
-                                </div>
-                              </div>
-                            ) : (
-                              `₹${(currentResolved.amount / 100).toFixed(2)}`
-                            )}
-                          </td>
-                          <td>
-                            <span className="badge badge-info">{currentResolved.splitType}</span>
-                            <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", marginTop: "4px" }}>
-                              {currentResolved.splitWith.join("; ")}
-                            </div>
-                          </td>
-                          <td>
-                            {hasAnomalies ? (
-                              <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                                {row.anomalies.map((a, idx) => (
-                                  <div 
-                                    key={idx} 
-                                    style={{ 
-                                      fontSize: "0.75rem", 
-                                      background: a.severity === "error" ? "var(--color-error-bg)" : "var(--color-warning-bg)",
-                                      color: a.severity === "error" ? "var(--color-error)" : "var(--color-warning)",
-                                      padding: "4px 8px",
-                                      borderRadius: "4px",
-                                      border: `1px solid ${a.severity === "error" ? "rgba(239,68,68,0.2)" : "rgba(245,158,11,0.2)"}`
-                                    }}
-                                  >
-                                    <strong>{a.type.toUpperCase()}:</strong> {a.message}
-                                    <div style={{ fontSize: "0.7rem", opacity: 0.85, marginTop: "2px" }}>
-                                      💡 Fix: {a.proposedResolution}
-                                    </div>
+                              )}
+                            </td>
+                            <td onClick={(e) => e.stopPropagation()}>
+                              {hasAnomalies && row.anomalies.some(a => a.field === "paidBy") ? (
+                                <select 
+                                  value={currentResolved.paidBy} 
+                                  onChange={(e) => handleValueChange(row.id, "paidBy", e.target.value)}
+                                  className="form-select"
+                                  style={{ width: "90px", padding: "4px 8px", fontSize: "0.8rem", border: "1px solid var(--color-warning)" }}
+                                >
+                                  <option value="Aisha">Aisha</option>
+                                  <option value="Rohan">Rohan</option>
+                                  <option value="Priya">Priya</option>
+                                  <option value="Meera">Meera</option>
+                                  <option value="Dev">Dev</option>
+                                  <option value="Sam">Sam</option>
+                                </select>
+                              ) : (
+                                currentResolved.paidBy
+                              )}
+                            </td>
+                            <td style={{ textAlign: "right", fontWeight: 600 }} onClick={(e) => e.stopPropagation()}>
+                              {currentResolved.currency === "USD" ? (
+                                <div>
+                                  <div style={{ fontSize: "0.85rem", color: "var(--color-secondary)", fontWeight: 700 }}>
+                                    ${(currentResolved.amount / 100).toFixed(2)}
                                   </div>
-                                ))}
+                                  <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)" }}>
+                                    ₹{((currentResolved.amount / 100) * currentResolved.exchangeRate).toFixed(0)}
+                                  </div>
+                                  <div style={{ display: "flex", alignItems: "center", gap: "2px", justifyContent: "flex-end", marginTop: "2px" }}>
+                                    <span style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>Rate:</span>
+                                    <input 
+                                      type="number" 
+                                      value={currentResolved.exchangeRate}
+                                      step="0.1"
+                                      onChange={(e) => handleValueChange(row.id, "exchangeRate", e.target.value)}
+                                      className="form-input"
+                                      style={{ width: "45px", padding: "2px 4px", fontSize: "0.75rem", textAlign: "right" }}
+                                    />
+                                  </div>
+                                </div>
+                              ) : (
+                                `₹${(currentResolved.amount / 100).toFixed(2)}`
+                              )}
+                            </td>
+                            <td>
+                              <span className="badge badge-info">{currentResolved.splitType}</span>
+                              <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", marginTop: "2px" }}>
+                                {currentResolved.splitWith.join("; ")}
                               </div>
-                            ) : (
-                              <span className="badge badge-success">Clean Row</span>
-                            )}
-                          </td>
-                        </tr>
+                            </td>
+                            <td>
+                              {hasAnomalies ? (
+                                <span className="badge badge-warning" style={{ fontSize: "0.75rem" }}>
+                                  ⚠️ {row.anomalies.length} Issues {isExpanded ? "▲" : "▼"}
+                                </span>
+                              ) : (
+                                <span className="badge badge-success">Clean Row</span>
+                              )}
+                            </td>
+                          </tr>
+                          
+                          {/* Expanded Details Sub-Row */}
+                          {isExpanded && (
+                            <tr key={row.id + "-detail"} style={{ background: "rgba(15, 23, 42, 0.45)" }}>
+                              <td colSpan={8} style={{ padding: "1.25rem", borderBottom: "1px solid var(--border-glass-hover)" }}>
+                                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                                  <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
+                                    <strong>Raw CSV Line:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,0,0.2)", padding: "2px 6px", borderRadius: "4px" }}>{row.rawLine}</code>
+                                  </div>
+                                  
+                                  {hasAnomalies && (
+                                    <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "4px" }}>
+                                      <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-warning)" }}>Detected Issues:</div>
+                                      {row.anomalies.map((a, idx) => (
+                                        <div 
+                                          key={idx} 
+                                          style={{ 
+                                            fontSize: "0.8rem", 
+                                            background: a.severity === "error" ? "var(--color-error-bg)" : "var(--color-warning-bg)",
+                                            color: a.severity === "error" ? "var(--color-error)" : "var(--color-warning)",
+                                            padding: "8px 12px",
+                                            borderRadius: "6px",
+                                            border: `1px solid ${a.severity === "error" ? "rgba(239,68,68,0.25)" : "rgba(245,158,11,0.25)"}`
+                                          }}
+                                        >
+                                          <strong>{a.type.toUpperCase()}:</strong> {a.message}
+                                          <div style={{ fontSize: "0.75rem", opacity: 0.9, marginTop: "4px", fontWeight: 500 }}>
+                                            💡 Proposed Resolution: {a.proposedResolution}
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  
+                                  {row.splitDetails && (
+                                    <div style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
+                                      <strong>Raw Split Details:</strong> <code>{row.splitDetails || "None"}</code>
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </>
                       );
                     })}
                   </tbody>
