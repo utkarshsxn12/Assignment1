@@ -1,33 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [currentUser, setCurrentUser] = useState<string>("Aisha");
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<string>("");
 
   useEffect(() => {
     const savedUser = localStorage.getItem("current_user");
-    if (savedUser) {
+    if (!savedUser && pathname !== "/login") {
+      router.push("/login");
+    } else if (savedUser) {
       setCurrentUser(savedUser);
-    } else {
-      localStorage.setItem("current_user", "Aisha");
     }
-  }, []);
+  }, [pathname, router]);
 
   const handleUserChange = (user: string) => {
     setCurrentUser(user);
     localStorage.setItem("current_user", user);
-    // Dispatch a custom event to notify other components of the login change
     window.dispatchEvent(new Event("user-login-change"));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("current_user");
+    router.push("/login");
+  };
+
+  if (pathname === "/login") {
+    return (
+      <nav className="app-navbar glass-card" style={{ display: "flex", justifyContent: "center" }}>
+        <div className="app-logo">
+          ⚡ SplitSync Evaluation Gateway
+        </div>
+      </nav>
+    );
+  }
+
   return (
-    <nav className="app-navbar glass-card" style={{ marginBottom: "2rem" }}>
+    <nav className="app-navbar glass-card">
       <div className="app-logo">
-        <span style={{ fontSize: "1.5rem" }}>⚡</span> SplitSync
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          ⚡ SplitSync
+        </Link>
       </div>
       
       <div className="nav-links">
@@ -51,22 +68,31 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <span style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>View Persona:</span>
-        <select 
-          value={currentUser} 
-          onChange={(e) => handleUserChange(e.target.value)}
-          className="form-select"
-          style={{ width: "120px", padding: "6px 10px", fontSize: "0.85rem" }}
-        >
-          <option value="Aisha">Aisha</option>
-          <option value="Rohan">Rohan</option>
-          <option value="Priya">Priya</option>
-          <option value="Meera">Meera (Left March)</option>
-          <option value="Sam">Sam (Joined April)</option>
-          <option value="Dev">Dev (Trip Guest)</option>
-        </select>
-      </div>
+      {currentUser && (
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Persona:</span>
+          <select 
+            value={currentUser} 
+            onChange={(e) => handleUserChange(e.target.value)}
+            className="form-select"
+            style={{ width: "100px", padding: "4px 8px", fontSize: "0.85rem" }}
+          >
+            <option value="Aisha">Aisha</option>
+            <option value="Rohan">Rohan</option>
+            <option value="Priya">Priya</option>
+            <option value="Meera">Meera</option>
+            <option value="Sam">Sam</option>
+            <option value="Dev">Dev</option>
+          </select>
+          <button 
+            onClick={handleLogout}
+            className="btn btn-secondary"
+            style={{ padding: "4px 8px", fontSize: "0.75rem", display: "flex", gap: "2px" }}
+          >
+            🚪 Logout
+          </button>
+        </div>
+      )}
     </nav>
   );
 }
