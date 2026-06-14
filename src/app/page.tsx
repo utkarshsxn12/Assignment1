@@ -180,7 +180,7 @@ export default function Home() {
       {/* Flatmate Persona Logins Gateway Section */}
       <div style={{ marginTop: "2rem", marginBottom: "4rem" }}>
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <h2 style={{ fontSize: "1.75rem", fontWeight: 800, letterSpacing: "-0.025em", color: "white" }}>
+          <h2 style={{ fontSize: "1.75rem", fontWeight: 800, letterSpacing: "-0.025em", color: "var(--text-primary)" }}>
             Select Flatmate Persona to Begin
           </h2>
           <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", marginTop: "6px" }}>
@@ -242,8 +242,8 @@ export default function Home() {
                     width: "42px",
                     height: "42px",
                     borderRadius: "10px",
-                    background: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    background: "#f1f5f9",
+                    border: "1px solid var(--border-color)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -252,7 +252,7 @@ export default function Home() {
                     {p.icon}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "white" }}>
+                    <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "var(--text-primary)" }}>
                       {p.name}
                     </h3>
                   </div>
@@ -263,7 +263,8 @@ export default function Home() {
                   fontSize: "0.8rem", 
                   fontStyle: "italic", 
                   color: "var(--text-secondary)",
-                  background: "rgba(0,0,0,0.2)",
+                  background: "#f8fafc",
+                  border: "1px solid var(--border-color)",
                   padding: "10px 12px",
                   borderRadius: "8px",
                   borderLeft: `3px solid ${p.badgeColor}`,
@@ -291,9 +292,9 @@ export default function Home() {
                     fontWeight: 600,
                     padding: "8px 12px", 
                     marginTop: "auto",
-                    backgroundColor: isActive ? p.badgeColor : "rgba(255,255,255,0.03)",
-                    borderColor: isActive ? p.badgeColor : "rgba(255,255,255,0.08)",
-                    color: "white",
+                    backgroundColor: isActive ? p.badgeColor : "var(--bg-card-header)",
+                    borderColor: isActive ? p.badgeColor : "var(--border-color)",
+                    color: isActive ? "white" : "var(--text-primary)",
                     transition: "all 0.15s ease",
                     boxShadow: isActive ? `0 2px 8px ${p.badgeColor}33` : "none"
                   }}
@@ -302,13 +303,15 @@ export default function Home() {
                       e.currentTarget.style.backgroundColor = p.badgeColor;
                       e.currentTarget.style.borderColor = p.badgeColor;
                       e.currentTarget.style.boxShadow = `0 2px 8px ${p.badgeColor}33`;
+                      e.currentTarget.style.color = "white";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.03)";
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                      e.currentTarget.style.backgroundColor = "var(--bg-card-header)";
+                      e.currentTarget.style.borderColor = "var(--border-color)";
                       e.currentTarget.style.boxShadow = "none";
+                      e.currentTarget.style.color = "var(--text-primary)";
                     }
                   }}
                 >

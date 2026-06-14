@@ -364,7 +364,7 @@ export default function ExpensesPage() {
 
               {/* Edit Form */}
               {editingMemberId && (
-                <div className="glass-card" style={{ padding: "1.5rem", background: "#f8fafc", border: "1px solid var(--border-color)" }}>
+                <div className="glass-card" style={{ padding: "1.5rem", background: "var(--bg-card-header)", border: "1px solid var(--border-color)" }}>
                   <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "1.25rem", color: "var(--color-primary)" }}>
                     Update Timeline: {members.find(m => m.id === editingMemberId)?.user.name}
                   </h3>
@@ -519,7 +519,7 @@ export default function ExpensesPage() {
             maxWidth: "550px", 
             maxHeight: "90vh", 
             overflowY: "auto",
-            background: "#ffffff",
+            background: "var(--bg-card)",
             border: "1px solid var(--border-color)",
             boxShadow: "0 20px 50px rgba(15, 23, 42, 0.15)"
           }}>
@@ -618,7 +618,7 @@ export default function ExpensesPage() {
               </div>
 
               {/* Dynamic split inputs */}
-              <div className="form-group" style={{ marginBottom: 0, background: "#f8fafc", padding: "1.15rem", borderRadius: "10px", border: "1px solid var(--border-color)" }}>
+              <div className="form-group" style={{ marginBottom: 0, background: "var(--bg-card-header)", padding: "1.15rem", borderRadius: "10px", border: "1px solid var(--border-color)" }}>
                 <label className="form-label" style={{ marginBottom: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>
                   👥 Split With (Active Members on {date})
                 </label>
@@ -709,7 +709,7 @@ export default function ExpensesPage() {
             padding: "2rem", 
             width: "100%", 
             maxWidth: "450px",
-            background: "#ffffff",
+            background: "var(--bg-card)",
             border: "1px solid var(--border-color)",
             boxShadow: "0 20px 50px rgba(15, 23, 42, 0.15)"
           }}>

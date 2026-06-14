@@ -29,8 +29,40 @@
   
   --color-info-bg: #f0f9ff;
   
+  --bg-navbar: rgba(255, 255, 255, 0.75);
+  --navbar-highlight: rgba(255, 255, 255, 0.9);
+  --card-highlight: rgba(255, 255, 255, 0.6);
+  --card-highlight-hover: rgba(255, 255, 255, 0.9);
+  
   --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: #0b0f19;             /* Deep dark blue-slate background */
+    --bg-card: rgba(17, 24, 39, 0.7); /* Dark glassmorphic card */
+    --bg-card-hover: #111827;
+    --bg-card-header: #1f2937;
+    --bg-input: #1f2937;
+    
+    --border-color: rgba(255, 255, 255, 0.08); /* Subtle border */
+    --border-color-hover: rgba(255, 255, 255, 0.15);
+    
+    --text-primary: #f9fafb;       /* Off-white */
+    --text-secondary: #cbd5e1;     /* Light slate-300 */
+    --text-muted: #64748b;         /* Slate-500 */
+    
+    --color-success-bg: rgba(16, 185, 129, 0.1);
+    --color-warning-bg: rgba(217, 119, 6, 0.1);
+    --color-error-bg: rgba(225, 29, 72, 0.1);
+    --color-info-bg: rgba(14, 165, 233, 0.1);
+    
+    --bg-navbar: rgba(17, 24, 39, 0.75);
+    --navbar-highlight: rgba(255, 255, 255, 0.05);
+    --card-highlight: rgba(255, 255, 255, 0.03);
+    --card-highlight-hover: rgba(255, 255, 255, 0.08);
+  }
 }
 
 * {
@@ -71,7 +103,7 @@ body {
   box-shadow: 
     0 4px 6px -1px rgba(0, 0, 0, 0.05), 
     0 10px 30px -10px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    inset 0 1px 0 var(--card-highlight);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -81,7 +113,7 @@ body {
   box-shadow: 
     0 10px 15px -3px rgba(0, 0, 0, 0.08), 
     0 20px 40px -15px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    inset 0 1px 0 var(--card-highlight-hover);
 }
 
 /* Custom Interactive Buttons */
@@ -204,7 +236,7 @@ p {
   justify-content: space-between;
   align-items: center;
   padding: 0.9rem 1.75rem;
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--bg-navbar);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
@@ -212,7 +244,7 @@ p {
   margin-bottom: 3rem;
   box-shadow: 
     0 4px 20px rgba(0, 0, 0, 0.03), 
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    inset 0 1px 0 var(--navbar-highlight);
   position: sticky;
   top: 1.25rem;
   z-index: 100;
@@ -258,10 +290,10 @@ p {
   overflow-x: auto;
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  background: #ffffff;
+  background: var(--bg-card);
   box-shadow: 
     0 4px 12px rgba(0, 0, 0, 0.02), 
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    inset 0 1px 0 var(--card-highlight);
 }
 
 .custom-table {
@@ -272,14 +304,12 @@ p {
 }
 
 .custom-table th {
-  background-color: #f8fafc;
+  background-color: var(--bg-card-header);
   padding: 1rem 1.25rem;
   font-weight: 700;
   color: var(--text-secondary);
   border-bottom: 1px solid var(--border-color);
   font-size: 0.725rem;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
 }
 
 .custom-table td {
@@ -290,7 +320,7 @@ p {
 }
 
 .custom-table tr:hover td {
-  background-color: #f8fafc !important;
+  background-color: var(--bg-card-header) !important;
 }
 
 .custom-table tr:last-child td {

@@ -398,11 +398,11 @@ export default function ImportPage() {
                           
                           {/* Expanded Details Sub-Row */}
                           {isExpanded && (
-                            <tr style={{ background: "#f8fafc" }}>
+                            <tr style={{ background: "var(--bg-card-header)" }}>
                               <td colSpan={8} style={{ padding: "1.5rem", borderBottom: "1px solid var(--border-color)" }}>
                                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                                   <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
-                                    <strong>Raw CSV Segment:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "#ffffff", padding: "4px 8px", borderRadius: "6px", color: "var(--color-primary)", border: "1px solid var(--border-color)" }}>{row.rawLine}</code>
+                                    <strong>Raw CSV Segment:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "var(--bg-input)", padding: "4px 8px", borderRadius: "6px", color: "var(--color-primary)", border: "1px solid var(--border-color)" }}>{row.rawLine}</code>
                                   </div>
                                   
                                   {hasAnomalies && (
@@ -431,7 +431,7 @@ export default function ImportPage() {
                                   
                                   {row.splitDetails && (
                                     <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
-                                      <strong>Raw Split Details:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "#ffffff", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>{row.splitDetails || "None"}</code>
+                                      <strong>Raw Split Details:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "var(--bg-input)", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>{row.splitDetails || "None"}</code>
                                     </div>
                                   )}
                                 </div>

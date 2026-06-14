@@ -191,7 +191,7 @@ export default function BalancesPage() {
                           justifyContent: "space-between",
                           padding: "14px 18px",
                           borderRadius: "10px",
-                          background: isRelevant ? "rgba(99, 102, 241, 0.04)" : "#ffffff",
+                          background: isRelevant ? "rgba(99, 102, 241, 0.04)" : "var(--bg-card)",
                           border: isRelevant ? "1px solid rgba(99, 102, 241, 0.2)" : "1px solid var(--border-color)",
                           transition: "border-color 0.15s ease",
                         }}
@@ -210,7 +210,7 @@ export default function BalancesPage() {
                             fontWeight: 700,
                             textTransform: "uppercase",
                             letterSpacing: "0.05em",
-                            background: "#f1f5f9",
+                            background: "var(--bg-card-header)",
                             padding: "2px 6px",
                             borderRadius: "4px"
                           }}>
@@ -268,7 +268,7 @@ export default function BalancesPage() {
                       className="glass-card"
                       style={{ 
                         padding: "14px 16px", 
-                        background: isCurrent ? "rgba(99, 102, 241, 0.02)" : "#ffffff",
+                        background: isCurrent ? "rgba(99, 102, 241, 0.02)" : "var(--bg-card)",
                         border: isCurrent ? "1px solid var(--color-primary)" : "1px solid var(--border-color)",
                         boxShadow: isCurrent ? "0 4px 12px rgba(99, 102, 241, 0.05)" : "none"
                       }}
@@ -318,7 +318,7 @@ export default function BalancesPage() {
                 </div>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "#ffffff", padding: "4px 12px", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "var(--bg-card-header)", padding: "4px 12px", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
                 <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 500 }}>Audit Member:</span>
                 <select 
                   value={selectedAuditUser}
@@ -337,7 +337,7 @@ export default function BalancesPage() {
                   }}
                 >
                   {balances.map(b => (
-                    <option key={b.userId} value={b.userId} style={{ background: "#ffffff" }}>{b.name}</option>
+                    <option key={b.userId} value={b.userId} style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>{b.name}</option>
                   ))}
                 </select>
               </div>
@@ -348,7 +348,7 @@ export default function BalancesPage() {
                 display: "grid", 
                 gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", 
                 padding: "1rem 1.25rem", 
-                background: "#f8fafc", 
+                background: "var(--bg-card-header)", 
                 borderRadius: "10px", 
                 marginBottom: "1.5rem",
                 border: "1px solid var(--border-color)",
@@ -430,7 +430,7 @@ export default function BalancesPage() {
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr style={{ background: "#f8fafc", fontWeight: 700, borderTop: "2px solid var(--border-color)" }}>
+                    <tr style={{ background: "var(--bg-card-header)", fontWeight: 700, borderTop: "2px solid var(--border-color)" }}>
                       <td colSpan={4} style={{ padding: "14px 16px", color: "var(--text-primary)", fontSize: "0.85rem" }}>Balance Check Sum (Σ Net Contribution)</td>
                       <td style={{ textAlign: "right", color: "var(--color-success)" }}>
                         {formatMoney(selectedAuditTrail.reduce((sum, e) => sum + e.userPaid, 0))}

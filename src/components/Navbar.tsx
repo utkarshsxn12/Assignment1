@@ -82,8 +82,8 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           gap: "8px",
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "var(--bg-card-header)",
+          border: "1px solid var(--border-color)",
           padding: "4px 10px",
           borderRadius: "8px"
         }}>
@@ -98,18 +98,18 @@ export default function Navbar() {
               fontSize: "0.8rem", 
               border: "none", 
               background: "transparent",
-              color: "white",
+              color: "var(--text-primary)",
               fontWeight: 700,
               cursor: "pointer",
               outline: "none"
             }}
           >
-            <option value="Aisha" style={{ background: "#0f172a" }}>Aisha</option>
-            <option value="Rohan" style={{ background: "#0f172a" }}>Rohan</option>
-            <option value="Priya" style={{ background: "#0f172a" }}>Priya</option>
-            <option value="Meera" style={{ background: "#0f172a" }}>Meera</option>
-            <option value="Sam" style={{ background: "#0f172a" }}>Sam</option>
-            <option value="Dev" style={{ background: "#0f172a" }}>Dev</option>
+            <option value="Aisha" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>Aisha</option>
+            <option value="Rohan" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>Rohan</option>
+            <option value="Priya" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>Priya</option>
+            <option value="Meera" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>Meera</option>
+            <option value="Sam" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>Sam</option>
+            <option value="Dev" style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>Dev</option>
           </select>
         </div>
         <button 
