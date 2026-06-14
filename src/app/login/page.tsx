@@ -12,139 +12,222 @@ export default function LoginPage() {
     router.push(redirectTo);
   };
 
-  const personas = [
+  const steps = [
     {
+      stepNumber: "Step 1",
       name: "Meera",
       role: "CSV Importer",
       assignmentQuery: "Meera: 'Clean up duplicates — but I want to approve changes.'",
-      guideline: "Step 1: Log in as Meera to upload expenses_export.csv. Review the anomalies and duplicates, adjust exchange rates, and authorize database writing.",
+      guideline: "Perform CSV import of `expenses_export.csv`. Resolve, inspect, and approve 20 detected data anomalies, and check duplicate skip proposals before writing to DB.",
       redirectTo: "/import",
       icon: "📥",
+      badgeColor: "var(--color-primary)",
     },
     {
+      stepNumber: "Step 2",
       name: "Aisha",
       role: "Settlement Manager",
       assignmentQuery: "Aisha: 'I just want one number per person. Who pays whom, how much.'",
-      guideline: "Step 2: Log in as Aisha to view simplified debts. Verify that room balances are settled in the minimal number of direct transactions.",
+      guideline: "Check room settlement balances. Verify that Splitwise-style debt simplification has reduced transactions to the minimum path.",
       redirectTo: "/balances",
       icon: "🤝",
+      badgeColor: "var(--color-secondary)",
     },
     {
+      stepNumber: "Step 3",
       name: "Rohan",
       role: "Auditor",
       assignmentQuery: "Rohan: 'No magic numbers. I want to see exactly which expenses make that up.'",
-      guideline: "Step 3: Log in as Rohan to check the Audit Trail. Verify every rupee Rohan paid or owes back to source CSV rows.",
+      guideline: "Inspect the detailed Balance Audit Trail for Rohan. Confirm that every single rupee he paid or owes matches back to a real transaction (zero magic numbers).",
       redirectTo: "/balances",
       icon: "🔍",
+      badgeColor: "#10b981",
     },
     {
+      stepNumber: "Step 4",
       name: "Priya",
       role: "Trip Auditor",
       assignmentQuery: "Priya: 'Half the trip was in dollars. The sheet pretends 1 USD = 1 INR.'",
-      guideline: "Step 4: Log in as Priya to inspect USD trip conversions. Verify that March villa bookings are converted at 83.0 INR.",
+      guideline: "Verify USD currency conversions. Inspect Priya's audit log to confirm foreign expenses (Goa Villa Booking) are parsed and converted at 83.0 INR.",
       redirectTo: "/balances",
       icon: "💵",
+      badgeColor: "#f59e0b",
     },
     {
+      stepNumber: "Step 5",
       name: "Sam",
       role: "Dynamic Member",
       assignmentQuery: "Sam: 'I moved in mid-April. Why would March electricity affect my balance?'",
-      guideline: "Step 5: Log in as Sam to verify timeline logic. Confirm March rent and bills are completely excluded from Sam's ledger.",
+      guideline: "Verify Sam's ledger. Confirm that rent and bills logged in March (before his join date) do not affect his balance or calculations.",
       redirectTo: "/balances",
       icon: "📅",
+      badgeColor: "#8b5cf6",
     },
     {
+      stepNumber: "Step 6",
       name: "Dev",
       role: "Trip Guest Host",
       assignmentQuery: "Dev: 'Trip participant. Dev's friend Kabir joined trip split.'",
-      guideline: "Step 6: Log in as Dev to verify guest split rules. Kabir's guest split is correctly mapped as a debt to Dev.",
+      guideline: "Verify Dev's guest rules. Ensure Kabir's (external friend) split shares are mapped as a direct debt under Dev (who hosted him).",
       redirectTo: "/balances",
       icon: "👤",
+      badgeColor: "#ec4899",
     },
   ];
 
   return (
     <div style={{
-      maxWidth: "960px",
+      maxWidth: "1100px",
       margin: "0 auto",
-      padding: "3rem 1.5rem",
+      padding: "4rem 1.5rem",
       display: "flex",
       flexDirection: "column",
-      gap: "2rem"
+      gap: "2.5rem"
     }}>
       {/* Title */}
       <div style={{ textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.25rem", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>
-          SplitSync Evaluation Dashboard
+        <div style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          background: "rgba(99, 102, 241, 0.08)",
+          border: "1px solid rgba(99, 102, 241, 0.2)",
+          padding: "6px 12px",
+          borderRadius: "99px",
+          fontSize: "0.8rem",
+          fontWeight: 600,
+          color: "var(--color-primary-hover)",
+          marginBottom: "1rem"
+        }}>
+          ⚡ SplitSync Evaluation Gateway
+        </div>
+        <h1 style={{ fontSize: "2.5rem", fontWeight: 800, letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>
+          Interactive Evaluation Walkthrough
         </h1>
-        <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", maxWidth: "550px", margin: "0 auto" }}>
-          Select a flatmate persona below to log in. Follow the step-by-step walkthrough instructions as requested in the assignment guidelines.
+        <p style={{ fontSize: "0.95rem", color: "var(--text-secondary)", maxWidth: "650px", margin: "0 auto", lineHeight: "1.6" }}>
+          To verify that all requirements in the assignment guidelines are met, log in as the flatmates below in sequential order to run each test.
         </p>
       </div>
 
-      {/* Grid of Personas */}
+      {/* Grid of Steps */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-        gap: "1.25rem",
+        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+        gap: "1.5rem",
         marginTop: "1rem"
       }}>
-        {personas.map((p) => (
+        {steps.map((s) => (
           <div 
-            key={p.name}
+            key={s.name}
             className="glass-card"
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "1rem",
+              gap: "1.25rem",
               cursor: "pointer",
-              transition: "transform 0.15s ease, border-color 0.15s ease",
+              position: "relative",
+              overflow: "hidden"
             }}
-            onClick={() => handleLogin(p.name, p.redirectTo)}
+            onClick={() => handleLogin(s.name, s.redirectTo)}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--color-primary-hover)";
-              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.borderColor = s.badgeColor;
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = `0 12px 30px rgba(0, 0, 0, 0.5), 0 0 15px ${s.badgeColor}1a`;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "var(--border-color)";
               e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
             }}
           >
-            {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <span style={{ fontSize: "1.5rem" }}>{p.icon}</span>
+            {/* Step & Role Indicator Header */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ 
+                fontSize: "0.75rem", 
+                fontWeight: 700, 
+                color: s.badgeColor, 
+                textTransform: "uppercase", 
+                letterSpacing: "0.1em"
+              }}>
+                {s.stepNumber}
+              </span>
+              <span className="badge badge-info" style={{ fontSize: "0.65rem", padding: "2px 8px" }}>
+                {s.role}
+              </span>
+            </div>
+
+            {/* Persona Identification */}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div style={{
+                width: "42px",
+                height: "42px",
+                borderRadius: "10px",
+                background: "rgba(255, 255, 255, 0.03)",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1.5rem"
+              }}>
+                {s.icon}
+              </div>
               <div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "white" }}>{p.name}</h3>
-                <span className="badge badge-info" style={{ fontSize: "0.65rem", padding: "2px 6px" }}>
-                  {p.role}
-                </span>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "white" }}>
+                  Log in as {s.name}
+                </h3>
               </div>
             </div>
 
-            {/* Assignment query */}
+            {/* Assignment request quote */}
             <div style={{ 
               fontSize: "0.8rem", 
               fontStyle: "italic", 
               color: "var(--text-secondary)",
-              background: "rgba(0,0,0,0.15)",
-              padding: "8px",
-              borderRadius: "6px",
-              borderLeft: "3px solid var(--color-primary)"
+              background: "rgba(0,0,0,0.2)",
+              padding: "10px 12px",
+              borderRadius: "8px",
+              borderLeft: `3px solid ${s.badgeColor}`,
+              lineHeight: "1.4"
             }}>
-              {p.assignmentQuery}
+              "{s.assignmentQuery}"
             </div>
 
-            {/* Walkthrough Guideline */}
-            <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", flexGrow: 1, lineHeight: "1.4" }}>
-              {p.guideline}
-            </p>
+            {/* Walkthrough instruction */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                Evaluation Goal
+              </span>
+              <p style={{ fontSize: "0.825rem", color: "var(--text-secondary)", lineHeight: "1.5" }}>
+                {s.guideline}
+              </p>
+            </div>
 
-            {/* Login button */}
+            {/* Action button */}
             <button 
-              className="btn btn-primary"
-              style={{ width: "100%", fontSize: "0.8rem", padding: "6px 12px", marginTop: "auto" }}
+              className="btn"
+              style={{ 
+                width: "100%", 
+                fontSize: "0.8rem", 
+                fontWeight: 600,
+                padding: "8px 12px", 
+                marginTop: "auto",
+                backgroundColor: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                color: "white",
+                transition: "all 0.15s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = s.badgeColor;
+                e.currentTarget.style.borderColor = s.badgeColor;
+                e.currentTarget.style.boxShadow = `0 2px 8px ${s.badgeColor}33`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.03)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             >
-              Log in as {p.name}
+              Start Step →
             </button>
           </div>
         ))}
