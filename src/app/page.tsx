@@ -8,8 +8,10 @@ import Navbar from "@/components/Navbar";
 export default function Home() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<string>("");
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
+    setMounted(true);
     setCurrentUser(localStorage.getItem("current_user") || "");
     const handleLoginChange = () => {
       setCurrentUser(localStorage.getItem("current_user") || "");
@@ -121,7 +123,7 @@ export default function Home() {
             fontWeight: 900, 
             letterSpacing: "-0.04em",
             lineHeight: "1.15",
-            background: "linear-gradient(to right, var(--text-primary), #475569)",
+            background: "linear-gradient(to right, var(--text-primary), var(--heading-gradient-end))",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}>
@@ -138,12 +140,51 @@ export default function Home() {
 
           {/* Action CTA Buttons */}
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "0.5rem" }}>
-            <Link href="/import" className="btn btn-primary" style={{ padding: "0.75rem 1.5rem", fontSize: "0.9rem" }}>
+            <Link 
+              href={mounted && currentUser ? "/import" : "#persona-selection"} 
+              className="btn btn-primary" 
+              style={{ padding: "0.75rem 1.5rem", fontSize: "0.9rem" }}
+              onClick={(e) => {
+                if (!mounted || !currentUser) {
+                  e.preventDefault();
+                  document.getElementById("persona-selection")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
               📥 Ingest Spreadsheet
             </Link>
-            <Link href="/balances" className="btn btn-secondary" style={{ padding: "0.75rem 1.5rem", fontSize: "0.9rem" }}>
+            <Link 
+              href={mounted && currentUser ? "/balances" : "#persona-selection"} 
+              className="btn btn-secondary" 
+              style={{ padding: "0.75rem 1.5rem", fontSize: "0.9rem" }}
+              onClick={(e) => {
+                if (!mounted || !currentUser) {
+                  e.preventDefault();
+                  document.getElementById("persona-selection")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+            >
               ⚖️ Check Balances
             </Link>
+            {(!mounted || !currentUser) && (
+              <Link 
+                href="#persona-selection" 
+                className="btn btn-secondary" 
+                style={{ 
+                  padding: "0.75rem 1.5rem", 
+                  fontSize: "0.9rem",
+                  background: "linear-gradient(135deg, var(--color-secondary), #0284c7)",
+                  color: "white",
+                  borderColor: "transparent"
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("persona-selection")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                🔑 Select Persona Login
+              </Link>
+            )}
           </div>
         </div>
 
@@ -178,7 +219,7 @@ export default function Home() {
       </div>
 
       {/* Flatmate Persona Logins Gateway Section */}
-      <div style={{ marginTop: "2rem", marginBottom: "4rem" }}>
+      <div id="persona-selection" style={{ marginTop: "2rem", marginBottom: "4rem" }}>
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <h2 style={{ fontSize: "1.75rem", fontWeight: 800, letterSpacing: "-0.025em", color: "var(--text-primary)" }}>
             Select Flatmate Persona to Begin
@@ -194,7 +235,7 @@ export default function Home() {
           gap: "1.5rem"
         }}>
           {personas.map((p) => {
-            const isActive = currentUser === p.name;
+            const isActive = mounted && currentUser === p.name;
             return (
               <div 
                 key={p.name}

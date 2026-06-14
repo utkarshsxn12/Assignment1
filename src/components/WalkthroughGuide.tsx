@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 export default function WalkthroughGuide() {
   const [currentUser, setCurrentUser] = useState<string>("");
   const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
+    setMounted(true);
     setCurrentUser(localStorage.getItem("current_user") || "");
     const handleLoginChange = () => {
       setCurrentUser(localStorage.getItem("current_user") || "");
@@ -18,7 +20,7 @@ export default function WalkthroughGuide() {
     };
   }, []);
 
-  if (!currentUser || collapsed) return null;
+  if (!mounted || !currentUser || collapsed) return null;
 
   const getStepDetails = (name: string) => {
     switch (name) {
@@ -87,17 +89,12 @@ export default function WalkthroughGuide() {
   return (
     <div className="glass-card" style={{
       borderLeft: `5px solid ${details.color}`,
-      background: "rgba(255, 255, 255, 0.95)",
-      borderTop: "1px solid var(--border-color)",
-      borderRight: "1px solid var(--border-color)",
-      borderBottom: "1px solid var(--border-color)",
       marginBottom: "2rem",
       display: "flex",
       flexDirection: "column",
       gap: "0.75rem",
       padding: "1.25rem 1.5rem",
-      position: "relative",
-      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.04)"
+      position: "relative"
     }}>
       <button 
         onClick={() => setCollapsed(true)} 
@@ -137,12 +134,15 @@ export default function WalkthroughGuide() {
 
       <div style={{ 
         fontSize: "0.825rem", 
-        background: "#f8fafc", 
+        background: "var(--bg-card-header)", 
         padding: "8px 12px", 
         borderRadius: "6px", 
         borderLeft: `3px solid ${details.color}`,
         color: "var(--text-primary)",
-        marginTop: "4px"
+        marginTop: "4px",
+        borderTop: "1px solid var(--border-color)",
+        borderRight: "1px solid var(--border-color)",
+        borderBottom: "1px solid var(--border-color)"
       }}>
         💡 <strong style={{ color: details.color }}>How to verify:</strong> {details.verification}
       </div>

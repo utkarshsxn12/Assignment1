@@ -8,8 +8,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<string>("");
+  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
+    setMounted(true);
     const savedUser = localStorage.getItem("current_user");
     if (!savedUser && pathname !== "/" && pathname !== "/login") {
       router.push("/");
@@ -34,7 +36,7 @@ export default function Navbar() {
   };
 
   // If not logged in, show a simplified centered gateway logo navbar
-  if (!currentUser) {
+  if (!mounted || !currentUser) {
     return (
       <nav className="app-navbar glass-card" style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid rgba(255, 255, 255, 0.08)" }}>
         <div className="app-logo" style={{ fontSize: "1.25rem", fontWeight: 900, background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>

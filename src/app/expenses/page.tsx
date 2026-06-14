@@ -481,7 +481,7 @@ export default function ExpensesPage() {
                               <span 
                                 key={s.id}
                                 style={{
-                                  background: "#f1f5f9",
+                                  background: "var(--bg-card-header)",
                                   color: "var(--text-primary)",
                                   padding: "2px 8px",
                                   borderRadius: "6px",

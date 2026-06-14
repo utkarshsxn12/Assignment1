@@ -555,7 +555,7 @@ export default function ImportPage() {
                           )}
                         </td>
                         <td>
-                          <span style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "var(--text-secondary)", background: "#f1f5f9", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>
+                          <span style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "var(--text-secondary)", background: "var(--bg-card-header)", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>
                             {row.actionTaken}
                           </span>
                         </td>
