@@ -6,64 +6,110 @@ export default function Home() {
     <div className="app-container">
       <Navbar />
 
+      {/* Hero Section Grid */}
       <div style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        alignItems: "center", 
-        textAlign: "center", 
-        padding: "3rem 0",
-        gap: "1.25rem"
+        display: "grid", 
+        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
+        gap: "3rem", 
+        alignItems: "center",
+        padding: "2rem 0 4rem",
+        width: "100%"
       }}>
-        {/* Top Feature Tag */}
-        <div style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          background: "rgba(99, 102, 241, 0.08)",
-          border: "1px solid rgba(99, 102, 241, 0.2)",
-          padding: "6px 12px",
-          borderRadius: "99px",
-          fontSize: "0.8rem",
-          fontWeight: 600,
-          color: "var(--color-primary-hover)",
-          marginBottom: "0.5rem"
-        }}>
-          💡 Evaluation Sandbox Ready
-        </div>
         
-        <h1 style={{ 
-          fontSize: "2.75rem", 
-          fontWeight: 900, 
-          letterSpacing: "-0.035em",
-          lineHeight: "1.2",
-          background: "linear-gradient(to right, #ffffff, #9ca3af)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
-        }}>
-          sharedExpense Flatmate Expenses
-        </h1>
-        
-        <p style={{ 
-          fontSize: "0.95rem", 
-          color: "var(--text-secondary)", 
-          maxWidth: "600px",
-          marginBottom: "2rem",
-          lineHeight: "1.6"
-        }}>
-          Clean up messy CSV spreadsheets, track room rent and household bills, and manage flatmates joining or leaving the group over time. Verify audit logs instantly with zero magic numbers.
-        </p>
+        {/* Left Column: Heading & CTAs */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", textAlign: "left" }}>
+          
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            background: "rgba(99, 102, 241, 0.08)",
+            border: "1px solid rgba(99, 102, 241, 0.2)",
+            padding: "6px 14px",
+            borderRadius: "99px",
+            fontSize: "0.8rem",
+            fontWeight: 700,
+            color: "var(--color-primary-hover)",
+            width: "fit-content"
+          }}>
+            ⚡ Roommate Expenses & Audits
+          </div>
+          
+          <h1 style={{ 
+            fontSize: "3rem", 
+            fontWeight: 900, 
+            letterSpacing: "-0.04em",
+            lineHeight: "1.15",
+            background: "linear-gradient(to right, #ffffff, #9ca3af)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
+          }}>
+            sharedExpense
+          </h1>
+          
+          <p style={{ 
+            fontSize: "1rem", 
+            color: "var(--text-secondary)", 
+            lineHeight: "1.65"
+          }}>
+            Clean up messy CSV spreadsheets, track room rent and household utility bills, and manage flatmates joining or leaving the group over time. Trace ledger audit trails instantly with zero magic numbers.
+          </p>
 
-        {/* Structured Dashboard Grid */}
+          {/* Action CTA Buttons */}
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "0.5rem" }}>
+            <Link href="/import" className="btn btn-primary" style={{ padding: "0.75rem 1.5rem", fontSize: "0.9rem" }}>
+              📥 Ingest Spreadsheet
+            </Link>
+            <Link href="/balances" className="btn btn-secondary" style={{ padding: "0.75rem 1.5rem", fontSize: "0.9rem" }}>
+              ⚖️ Check Balances
+            </Link>
+          </div>
+        </div>
+
+        {/* Right Column: Beautiful Generated Illustration */}
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
+          {/* Subtle warm glow behind illustration */}
+          <div style={{
+            position: "absolute",
+            width: "300px",
+            height: "300px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)",
+            filter: "blur(20px)",
+            zIndex: 0
+          }} />
+          
+          <img 
+            src="/home_hero.png" 
+            alt="Roommate calculations" 
+            style={{
+              width: "100%",
+              maxWidth: "460px",
+              borderRadius: "20px",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6)",
+              zIndex: 1,
+              position: "relative"
+            }} 
+          />
+        </div>
+
+      </div>
+
+      {/* Feature Breakdown Section */}
+      <div style={{ marginTop: "2rem" }}>
+        <h2 style={{ fontSize: "1.5rem", fontWeight: 800, marginBottom: "2rem", textAlign: "center", letterSpacing: "-0.02em" }}>
+          Key Features & Sandboxes
+        </h2>
+        
         <div style={{ 
           display: "grid", 
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", 
           gap: "1.5rem", 
-          width: "100%", 
-          maxWidth: "960px",
-          marginBottom: "2.5rem"
+          width: "100%"
         }}>
           
-          <div className="glass-card" style={{ textAlign: "left", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div className="glass-card" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             <div style={{
               width: "36px",
               height: "36px",
@@ -76,18 +122,18 @@ export default function Home() {
             }}>
               📥
             </div>
-            <h3 style={{ fontSize: "1.05rem", fontWeight: 700 }}>CSV Import Staging</h3>
+            <h3 style={{ fontSize: "1.05rem", fontWeight: 700 }}>Interactive CSV Importer</h3>
             <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: "1.5" }}>
               Upload raw spreadsheets. The engine identifies duplicates, cleans dirty numbers, converts foreign currencies, and stages rows for interactive manual approval.
             </p>
           </div>
 
-          <div className="glass-card" style={{ textAlign: "left", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div className="glass-card" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             <div style={{
               width: "36px",
               height: "36px",
               borderRadius: "8px",
-              background: "rgba(56, 189, 248, 0.08)",
+              background: "rgba(14, 165, 233, 0.08)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -101,7 +147,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="glass-card" style={{ textAlign: "left", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div className="glass-card" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             <div style={{
               width: "36px",
               height: "36px",
@@ -121,20 +167,6 @@ export default function Home() {
           </div>
 
         </div>
-
-        {/* Action Buttons */}
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/import" className="btn btn-primary" style={{ padding: "0.7rem 1.4rem", fontSize: "0.9rem" }}>
-            📥 Import Spreadsheet CSV
-          </Link>
-          <Link href="/balances" className="btn btn-secondary" style={{ padding: "0.7rem 1.4rem", fontSize: "0.9rem" }}>
-            ⚖️ Check Room Balances
-          </Link>
-          <Link href="/expenses" className="btn btn-secondary" style={{ padding: "0.7rem 1.4rem", fontSize: "0.9rem" }}>
-            💸 View Logged Expenses
-          </Link>
-        </div>
-
       </div>
     </div>
   );
