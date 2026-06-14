@@ -117,7 +117,7 @@ export default function BalancesPage() {
           <div style={{
             width: "36px",
             height: "36px",
-            border: "3px solid rgba(255,255,255,0.08)",
+            border: "3px solid var(--border-color)",
             borderTopColor: "var(--color-primary)",
             borderRadius: "50%",
             animation: "spin 1s linear infinite"
@@ -144,7 +144,7 @@ export default function BalancesPage() {
                   width: "40px",
                   height: "40px",
                   borderRadius: "10px",
-                  background: "rgba(56, 189, 248, 0.08)",
+                  background: "rgba(14, 165, 233, 0.08)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -153,7 +153,7 @@ export default function BalancesPage() {
                   🤝
                 </div>
                 <div>
-                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "white" }}>Settlement Summary</h2>
+                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--text-primary)" }}>Settlement Summary</h2>
                   <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Simplified net direct payments (Splitwise algorithm)</p>
                 </div>
               </div>
@@ -162,10 +162,10 @@ export default function BalancesPage() {
                 <div style={{ 
                   textAlign: "center", 
                   padding: "3rem 1.5rem", 
-                  background: "rgba(16, 185, 129, 0.02)", 
+                  background: "var(--color-success-bg)", 
                   borderRadius: "12px",
                   color: "var(--color-success)",
-                  border: "1px dashed rgba(16, 185, 129, 0.2)",
+                  border: "1px dashed rgba(16, 185, 129, 0.3)",
                   fontSize: "0.9rem",
                   fontWeight: 500,
                   display: "flex",
@@ -191,8 +191,8 @@ export default function BalancesPage() {
                           justifyContent: "space-between",
                           padding: "14px 18px",
                           borderRadius: "10px",
-                          background: isRelevant ? "rgba(99, 102, 241, 0.06)" : "rgba(255, 255, 255, 0.02)",
-                          border: isRelevant ? "1px solid rgba(99, 102, 241, 0.25)" : "1px solid rgba(255, 255, 255, 0.04)",
+                          background: isRelevant ? "rgba(99, 102, 241, 0.04)" : "#ffffff",
+                          border: isRelevant ? "1px solid rgba(99, 102, 241, 0.2)" : "1px solid var(--border-color)",
                           transition: "border-color 0.15s ease",
                         }}
                       >
@@ -200,17 +200,17 @@ export default function BalancesPage() {
                           <span style={{ 
                             fontWeight: 700, 
                             fontSize: "0.9rem",
-                            color: debt.fromUser === currentUser ? "var(--color-error)" : "white" 
+                            color: debt.fromUser === currentUser ? "var(--color-error)" : "var(--text-primary)" 
                           }}>
                             {debt.fromUser}
                           </span>
                           <span style={{ 
                             fontSize: "0.75rem", 
-                            color: "var(--text-muted)", 
-                            fontWeight: 600,
+                            color: "var(--text-secondary)", 
+                            fontWeight: 700,
                             textTransform: "uppercase",
                             letterSpacing: "0.05em",
-                            background: "rgba(255,255,255,0.03)",
+                            background: "#f1f5f9",
                             padding: "2px 6px",
                             borderRadius: "4px"
                           }}>
@@ -219,7 +219,7 @@ export default function BalancesPage() {
                           <span style={{ 
                             fontWeight: 700, 
                             fontSize: "0.9rem",
-                            color: debt.toUser === currentUser ? "var(--color-success)" : "white" 
+                            color: debt.toUser === currentUser ? "var(--color-success)" : "var(--text-primary)" 
                           }}>
                             {debt.toUser}
                           </span>
@@ -254,7 +254,7 @@ export default function BalancesPage() {
                   📊
                 </div>
                 <div>
-                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "white" }}>Group Balances</h2>
+                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--text-primary)" }}>Group Balances</h2>
                   <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Individual net standing across all expenses</p>
                 </div>
               </div>
@@ -268,9 +268,9 @@ export default function BalancesPage() {
                       className="glass-card"
                       style={{ 
                         padding: "14px 16px", 
-                        background: isCurrent ? "rgba(99, 102, 241, 0.05)" : "rgba(3, 7, 18, 0.2)",
-                        border: isCurrent ? "1px solid var(--color-primary)" : "1px solid rgba(255, 255, 255, 0.06)",
-                        boxShadow: isCurrent ? "0 4px 12px rgba(99, 102, 241, 0.1)" : "none"
+                        background: isCurrent ? "rgba(99, 102, 241, 0.02)" : "#ffffff",
+                        border: isCurrent ? "1px solid var(--color-primary)" : "1px solid var(--border-color)",
+                        boxShadow: isCurrent ? "0 4px 12px rgba(99, 102, 241, 0.05)" : "none"
                       }}
                     >
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
@@ -284,9 +284,9 @@ export default function BalancesPage() {
                         {b.netBalance > 0 ? "+" : ""}{formatMoney(b.netBalance)}
                       </div>
 
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "12px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "8px" }}>
-                        <span>Paid: <span style={{ color: "white", fontWeight: 500 }}>{formatMoney(b.totalPaid)}</span></span>
-                        <span>Owed: <span style={{ color: "white", fontWeight: 500 }}>{formatMoney(b.totalOwed)}</span></span>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "12px", borderTop: "1px solid var(--border-color)", paddingTop: "8px" }}>
+                        <span>Paid: <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{formatMoney(b.totalPaid)}</span></span>
+                        <span>Owed: <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{formatMoney(b.totalOwed)}</span></span>
                       </div>
                     </div>
                   );
@@ -313,12 +313,12 @@ export default function BalancesPage() {
                   🔍
                 </div>
                 <div>
-                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "white" }}>Balance Audit Trail</h2>
+                  <h2 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--text-primary)" }}>Balance Audit Trail</h2>
                   <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>Trace every single rupee back to source expenses (Rohan's request)</p>
                 </div>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.03)", padding: "4px 12px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", background: "#ffffff", padding: "4px 12px", borderRadius: "8px", border: "1px solid var(--border-color)" }}>
                 <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 500 }}>Audit Member:</span>
                 <select 
                   value={selectedAuditUser}
@@ -330,14 +330,14 @@ export default function BalancesPage() {
                     fontSize: "0.85rem",
                     border: "none",
                     background: "transparent",
-                    color: "white",
+                    color: "var(--text-primary)",
                     fontWeight: 700,
                     outline: "none",
                     cursor: "pointer"
                   }}
                 >
                   {balances.map(b => (
-                    <option key={b.userId} value={b.userId} style={{ background: "#0f172a" }}>{b.name}</option>
+                    <option key={b.userId} value={b.userId} style={{ background: "#ffffff" }}>{b.name}</option>
                   ))}
                 </select>
               </div>
@@ -348,27 +348,27 @@ export default function BalancesPage() {
                 display: "grid", 
                 gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", 
                 padding: "1rem 1.25rem", 
-                background: "rgba(255,255,255,0.01)", 
+                background: "#f8fafc", 
                 borderRadius: "10px", 
                 marginBottom: "1.5rem",
-                border: "1px solid rgba(255,255,255,0.04)",
+                border: "1px solid var(--border-color)",
                 fontSize: "0.85rem",
                 gap: "1rem"
               }}>
                 <div>
-                  <div style={{ color: "var(--text-muted)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Audited Member</div>
-                  <strong style={{ color: "var(--color-primary-hover)", fontSize: "1rem", fontWeight: 700 }}>{selectedUserBalance.name}</strong>
+                  <div style={{ color: "var(--text-secondary)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Audited Member</div>
+                  <strong style={{ color: "var(--color-primary)", fontSize: "1rem", fontWeight: 700 }}>{selectedUserBalance.name}</strong>
                 </div>
                 <div>
-                  <div style={{ color: "var(--text-muted)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Total Group Paid</div>
-                  <strong style={{ color: "white", fontSize: "1rem", fontWeight: 700 }}>{formatMoney(selectedUserBalance.totalPaid)}</strong>
+                  <div style={{ color: "var(--text-secondary)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Total Group Paid</div>
+                  <strong style={{ color: "var(--text-primary)", fontSize: "1rem", fontWeight: 700 }}>{formatMoney(selectedUserBalance.totalPaid)}</strong>
                 </div>
                 <div>
-                  <div style={{ color: "var(--text-muted)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Total Share Owed</div>
-                  <strong style={{ color: "white", fontSize: "1rem", fontWeight: 700 }}>{formatMoney(selectedUserBalance.totalOwed)}</strong>
+                  <div style={{ color: "var(--text-secondary)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Total Share Owed</div>
+                  <strong style={{ color: "var(--text-primary)", fontSize: "1rem", fontWeight: 700 }}>{formatMoney(selectedUserBalance.totalOwed)}</strong>
                 </div>
                 <div>
-                  <div style={{ color: "var(--text-muted)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Net Balance Status</div>
+                  <div style={{ color: "var(--text-secondary)", fontSize: "0.75rem", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Net Balance Status</div>
                   <strong style={{ color: getBalanceColor(selectedUserBalance.netBalance), fontSize: "1rem", fontWeight: 800 }}>
                     {selectedUserBalance.netBalance > 0 ? "+" : ""}{formatMoney(selectedUserBalance.netBalance)}
                   </strong>
@@ -396,15 +396,15 @@ export default function BalancesPage() {
                   </thead>
                   <tbody>
                     {selectedAuditTrail.map((entry, idx) => (
-                      <tr key={idx} style={entry.isSettlement ? { background: "rgba(16, 185, 129, 0.02)" } : {}}>
+                      <tr key={idx} style={entry.isSettlement ? { background: "var(--color-success-bg)" } : {}}>
                         <td style={{ color: "var(--text-secondary)" }}>{entry.date}</td>
                         <td>
                           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                             {entry.isSettlement && <span className="badge badge-success" style={{ fontSize: "0.6rem", padding: "1px 5px" }}>Settlement</span>}
-                            <strong style={{ color: "white" }}>{entry.description}</strong>
+                            <strong style={{ color: "var(--text-primary)" }}>{entry.description}</strong>
                           </div>
                           {entry.currency === "USD" && (
-                            <div style={{ fontSize: "0.75rem", color: "var(--color-secondary)", marginTop: "2px" }}>
+                            <div style={{ fontSize: "0.75rem", color: "var(--color-secondary)", marginTop: "2px", fontWeight: 500 }}>
                               Original: ${ (entry.totalAmount / entry.exchangeRate / 100).toFixed(2) } USD (Exchange Rate: {entry.exchangeRate})
                             </div>
                           )}
@@ -413,10 +413,10 @@ export default function BalancesPage() {
                         <td style={{ textAlign: "right", color: "var(--text-secondary)" }}>
                           {formatMoney(entry.totalAmount)}
                         </td>
-                        <td style={{ textAlign: "right", fontWeight: 500, color: entry.userPaid > 0 ? "var(--color-success)" : "var(--text-muted)" }}>
+                        <td style={{ textAlign: "right", fontWeight: 600, color: entry.userPaid > 0 ? "var(--color-success)" : "var(--text-muted)" }}>
                           {entry.userPaid > 0 ? formatMoney(entry.userPaid) : "—"}
                         </td>
-                        <td style={{ textAlign: "right", fontWeight: 500, color: entry.userShare > 0 ? "var(--color-error)" : "var(--text-muted)" }}>
+                        <td style={{ textAlign: "right", fontWeight: 600, color: entry.userShare > 0 ? "var(--color-error)" : "var(--text-muted)" }}>
                           {entry.userShare > 0 ? formatMoney(entry.userShare) : "—"}
                         </td>
                         <td style={{ 
@@ -430,8 +430,8 @@ export default function BalancesPage() {
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr style={{ background: "rgba(255,255,255,0.02)", fontWeight: 700, borderTop: "2px solid rgba(255,255,255,0.08)" }}>
-                      <td colSpan={4} style={{ padding: "14px 16px", color: "white", fontSize: "0.85rem" }}>Balance Check Sum (Σ Net Contribution)</td>
+                    <tr style={{ background: "#f8fafc", fontWeight: 700, borderTop: "2px solid var(--border-color)" }}>
+                      <td colSpan={4} style={{ padding: "14px 16px", color: "var(--text-primary)", fontSize: "0.85rem" }}>Balance Check Sum (Σ Net Contribution)</td>
                       <td style={{ textAlign: "right", color: "var(--color-success)" }}>
                         {formatMoney(selectedAuditTrail.reduce((sum, e) => sum + e.userPaid, 0))}
                       </td>
@@ -442,7 +442,7 @@ export default function BalancesPage() {
                         textAlign: "right", 
                         fontSize: "0.95rem",
                         fontWeight: 800,
-                        color: selectedUserBalance ? getBalanceColor(selectedUserBalance.netBalance) : "white"
+                        color: selectedUserBalance ? getBalanceColor(selectedUserBalance.netBalance) : "var(--text-primary)"
                       }}>
                         {selectedUserBalance && selectedUserBalance.netBalance > 0 ? "+" : ""}
                         {selectedUserBalance ? formatMoney(selectedUserBalance.netBalance) : "—"}

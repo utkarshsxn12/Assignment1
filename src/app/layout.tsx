@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "sharedExpense - Shared Flat Expenses & Settlement Engine",
+  title: "SplitSync - Shared Flat Expenses & Settlement Engine",
   description: "Track rent, household utility bills, dynamic timeline memberships, and trace all flatmate balance calculations with zero magic numbers.",
 };
 

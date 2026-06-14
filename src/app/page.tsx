@@ -121,11 +121,11 @@ export default function Home() {
             fontWeight: 900, 
             letterSpacing: "-0.04em",
             lineHeight: "1.15",
-            background: "linear-gradient(to right, #ffffff, #9ca3af)",
+            background: "linear-gradient(to right, var(--text-primary), #475569)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}>
-            sharedExpense
+            SplitSync
           </h1>
           
           <p style={{ 

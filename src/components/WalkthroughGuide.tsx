@@ -53,7 +53,7 @@ export default function WalkthroughGuide() {
         return {
           role: "Trip Auditor",
           problem: "The Goa trip was booked in USD ($), but the raw spreadsheet logged them as $1 = 1 INR, which breaks splits and underpays Priya.",
-          resolution: "Our parsing engine (src/lib/importer.ts) detects foreign currency indicators. If currency is 'USD', it applies a historical exchange rate of 1 USD = 83.0 INR (fully editable in the importer staging grid) to convert splits to INR paise.",
+          resolution: "Our parsing engine (src/lib/importer.ts) detects foreign currency indicators. If currency is 'USD', it applies a historical exchange rate of 1 USD = 83.0 INR (fully editable in the staging grid) to convert splits to INR paise.",
           verification: "Select 'Priya' in the 'Balance Audit Trail' selector below. Find the 'Goa Villa Booking' entry. The original USD amount ($120.00) is converted at 83.0 INR to ₹9,960.00. Priya paid, so her ledger shows a positive net contribution of +₹6,640.00.",
           color: "#f59e0b",
           icon: "💵"
@@ -62,7 +62,7 @@ export default function WalkthroughGuide() {
         return {
           role: "Dynamic Member",
           problem: "Sam moved in on April 15. Rent and utility items from March (before he lived in the flat) should not affect his ledger or calculations.",
-          resolution: "We implemented dynamic timeline membership splits. Roommates have joinDate and leaveDate timelines. The split calculation engine (src/lib/splits.ts) checks if a member was active on the transaction date; if not active, they are excluded from the split.",
+          resolution: "We programmed membership timelines. Each member has a join and leave date. The split calculation engine (src/lib/splits.ts) checks if a member was active on the expense date; if not active, they are excluded from the split.",
           verification: "Audit Sam in the ledger below. You will see he has zero splits or contributions for any March bills (like March Rent or March Electricity). His ledger only shows items logged after his membership join date.",
           color: "#8b5cf6",
           icon: "📅"
@@ -87,13 +87,17 @@ export default function WalkthroughGuide() {
   return (
     <div className="glass-card" style={{
       borderLeft: `5px solid ${details.color}`,
-      background: "rgba(15, 23, 42, 0.8)",
+      background: "rgba(255, 255, 255, 0.95)",
+      borderTop: "1px solid var(--border-color)",
+      borderRight: "1px solid var(--border-color)",
+      borderBottom: "1px solid var(--border-color)",
       marginBottom: "2rem",
       display: "flex",
       flexDirection: "column",
       gap: "0.75rem",
       padding: "1.25rem 1.5rem",
-      position: "relative"
+      position: "relative",
+      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.04)"
     }}>
       <button 
         onClick={() => setCollapsed(true)} 
@@ -105,7 +109,7 @@ export default function WalkthroughGuide() {
           border: "none",
           color: "var(--text-muted)",
           cursor: "pointer",
-          fontSize: "1rem"
+          fontSize: "1.2rem"
         }}
         title="Hide Guide"
       >
@@ -119,25 +123,25 @@ export default function WalkthroughGuide() {
         </span>
       </div>
 
-      <h3 style={{ fontSize: "1.1rem", fontWeight: 750, color: "white" }}>
+      <h3 style={{ fontSize: "1.1rem", fontWeight: 750, color: "var(--text-primary)" }}>
         Resolved {currentUser}'s Problem!
       </h3>
 
       <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>
-        <strong style={{ color: "white" }}>Problem:</strong> "{details.problem}"
+        <strong style={{ color: "var(--text-primary)" }}>Problem:</strong> "{details.problem}"
       </div>
 
       <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>
-        <strong style={{ color: "white" }}>How We Solved It:</strong> {details.resolution}
+        <strong style={{ color: "var(--text-primary)" }}>How We Resolved It:</strong> {details.resolution}
       </div>
 
       <div style={{ 
         fontSize: "0.825rem", 
-        background: "rgba(255, 255, 255, 0.02)", 
+        background: "#f8fafc", 
         padding: "8px 12px", 
         borderRadius: "6px", 
         borderLeft: `3px solid ${details.color}`,
-        color: "white",
+        color: "var(--text-primary)",
         marginTop: "4px"
       }}>
         💡 <strong style={{ color: details.color }}>How to verify:</strong> {details.verification}

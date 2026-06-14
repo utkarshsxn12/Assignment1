@@ -287,7 +287,7 @@ export default function ExpensesPage() {
         {/* Page Title & Quick Actions */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.25rem" }}>
           <div>
-            <h1 style={{ fontSize: "1.85rem", fontWeight: 800 }}>💸 Group Expenses</h1>
+            <h1 style={{ fontSize: "1.85rem", fontWeight: 800, color: "var(--text-primary)" }}>💸 Group Expenses</h1>
             <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: "2px" }}>
               Log rent, household bills, split vacation bookings, and settle balances
             </p>
@@ -303,7 +303,7 @@ export default function ExpensesPage() {
             <button 
               onClick={() => setShowMemberSettings(prev => !prev)} 
               className="btn btn-secondary"
-              style={{ fontWeight: 600, borderColor: showMemberSettings ? "var(--color-primary-hover)" : "rgba(255,255,255,0.08)" }}
+              style={{ fontWeight: 600, borderColor: showMemberSettings ? "var(--color-primary)" : "var(--border-color)" }}
             >
               ⚙️ Timelines
             </button>
@@ -313,7 +313,7 @@ export default function ExpensesPage() {
         {/* Dynamic Member Settings Panel (Sam / Meera join/leave tests) */}
         {showMemberSettings && (
           <div className="glass-card" style={{ padding: "1.75rem", borderLeft: "4px solid var(--color-primary)" }}>
-            <h2 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem" }}>
+            <h2 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem", color: "var(--text-primary)" }}>
               ⚙️ House Membership Timelines (Dynamic Splits)
             </h2>
             <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
@@ -341,7 +341,7 @@ export default function ExpensesPage() {
                           <td>{m.joinDate.split("T")[0]}</td>
                           <td>
                             {m.leaveDate ? (
-                              <span style={{ color: "var(--color-warning)" }}>{m.leaveDate.split("T")[0]}</span>
+                              <span style={{ color: "var(--color-warning)", fontWeight: 600 }}>{m.leaveDate.split("T")[0]}</span>
                             ) : (
                               <span className="badge badge-success" style={{ fontSize: "0.6rem", padding: "2px 6px" }}>Active</span>
                             )}
@@ -364,8 +364,8 @@ export default function ExpensesPage() {
 
               {/* Edit Form */}
               {editingMemberId && (
-                <div className="glass-card" style={{ padding: "1.5rem", background: "rgba(3, 7, 18, 0.4)", border: "1px solid rgba(255, 255, 255, 0.04)" }}>
-                  <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "1.25rem", color: "var(--color-primary-hover)" }}>
+                <div className="glass-card" style={{ padding: "1.5rem", background: "#f8fafc", border: "1px solid var(--border-color)" }}>
+                  <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "1.25rem", color: "var(--color-primary)" }}>
                     Update Timeline: {members.find(m => m.id === editingMemberId)?.user.name}
                   </h3>
                   <form onSubmit={submitMemberUpdate} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -387,7 +387,7 @@ export default function ExpensesPage() {
                         onChange={(e) => setEditLeaveDate(e.target.value)}
                         className="form-input"
                       />
-                      <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "4px", display: "block" }}>
+                      <span style={{ fontSize: "0.7rem", color: "var(--text-secondary)", marginTop: "4px", display: "block" }}>
                         Leave blank if flatmate is currently active.
                       </span>
                     </div>
@@ -418,7 +418,7 @@ export default function ExpensesPage() {
             <div style={{
               width: "32px",
               height: "32px",
-              border: "3px solid rgba(255,255,255,0.08)",
+              border: "3px solid var(--border-color)",
               borderTopColor: "var(--color-primary)",
               borderRadius: "50%",
               animation: "spin 1s linear infinite"
@@ -452,7 +452,7 @@ export default function ExpensesPage() {
                     return (
                       <tr 
                         key={expense.id}
-                        style={expense.isSettlement ? { background: "rgba(16, 185, 129, 0.02)" } : {}}
+                        style={expense.isSettlement ? { background: "var(--color-success-bg)" } : {}}
                       >
                         <td style={{ color: "var(--text-secondary)" }}>
                           {expense.date.split("T")[0]}
@@ -460,7 +460,7 @@ export default function ExpensesPage() {
                         <td>
                           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                             {expense.isSettlement && <span className="badge badge-success" style={{ fontSize: "0.6rem", padding: "1px 5px" }}>Payment</span>}
-                            <strong style={{ fontSize: "0.925rem", color: "white" }}>{expense.description}</strong>
+                            <strong style={{ fontSize: "0.925rem", color: "var(--text-primary)" }}>{expense.description}</strong>
                           </div>
                           {expense.notes && (
                             <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "2px" }}>
@@ -481,15 +481,15 @@ export default function ExpensesPage() {
                               <span 
                                 key={s.id}
                                 style={{
-                                  background: "rgba(255,255,255,0.03)",
-                                  color: "white",
+                                  background: "#f1f5f9",
+                                  color: "var(--text-primary)",
                                   padding: "2px 8px",
                                   borderRadius: "6px",
-                                  border: "1px solid rgba(255, 255, 255, 0.04)",
+                                  border: "1px solid var(--border-color)",
                                   fontSize: "0.75rem"
                                 }}
                               >
-                                {s.user.name}: <span style={{ fontWeight: 600 }}>₹{(s.amount / 100).toFixed(0)}</span>
+                                {s.user.name}: <span style={{ fontWeight: 700 }}>₹{(s.amount / 100).toFixed(0)}</span>
                               </span>
                             ))}
                           </div>
@@ -509,7 +509,7 @@ export default function ExpensesPage() {
       {showAddModal && (
         <div style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-          background: "rgba(0, 0, 0, 0.8)", backdropFilter: "blur(8px)",
+          background: "rgba(15, 23, 42, 0.4)", backdropFilter: "blur(8px)",
           display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000,
           padding: "1rem"
         }}>
@@ -519,10 +519,11 @@ export default function ExpensesPage() {
             maxWidth: "550px", 
             maxHeight: "90vh", 
             overflowY: "auto",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 20px 50px rgba(0,0,0,0.6)"
+            background: "#ffffff",
+            border: "1px solid var(--border-color)",
+            boxShadow: "0 20px 50px rgba(15, 23, 42, 0.15)"
           }}>
-            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "1.5rem", color: "white" }}>➕ Add New Group Expense</h2>
+            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "1.5rem", color: "var(--text-primary)" }}>➕ Add New Group Expense</h2>
             
             <form onSubmit={submitExpense} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
               <div className="form-group" style={{ marginBottom: 0 }}>
@@ -617,8 +618,8 @@ export default function ExpensesPage() {
               </div>
 
               {/* Dynamic split inputs */}
-              <div className="form-group" style={{ marginBottom: 0, background: "rgba(3,7,18,0.4)", padding: "1.15rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.04)" }}>
-                <label className="form-label" style={{ marginBottom: "0.85rem", fontWeight: 700, color: "white" }}>
+              <div className="form-group" style={{ marginBottom: 0, background: "#f8fafc", padding: "1.15rem", borderRadius: "10px", border: "1px solid var(--border-color)" }}>
+                <label className="form-label" style={{ marginBottom: "0.85rem", fontWeight: 700, color: "var(--text-primary)" }}>
                   👥 Split With (Active Members on {date})
                 </label>
                 
@@ -632,7 +633,7 @@ export default function ExpensesPage() {
                       const isChecked = !!selectedSplits[m.userId];
                       return (
                         <div key={m.userId} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", cursor: "pointer", color: "white" }}>
+                          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", cursor: "pointer", color: "var(--text-primary)" }}>
                             <input 
                               type="checkbox" 
                               checked={isChecked}
@@ -700,7 +701,7 @@ export default function ExpensesPage() {
       {showSettleModal && (
         <div style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-          background: "rgba(0, 0, 0, 0.8)", backdropFilter: "blur(8px)",
+          background: "rgba(15, 23, 42, 0.4)", backdropFilter: "blur(8px)",
           display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000,
           padding: "1rem"
         }}>
@@ -708,10 +709,11 @@ export default function ExpensesPage() {
             padding: "2rem", 
             width: "100%", 
             maxWidth: "450px",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow: "0 20px 50px rgba(0,0,0,0.6)"
+            background: "#ffffff",
+            border: "1px solid var(--border-color)",
+            boxShadow: "0 20px 50px rgba(15, 23, 42, 0.15)"
           }}>
-            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "1.5rem", color: "white" }}>🤝 Log Debt Payment</h2>
+            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "1.5rem", color: "var(--text-primary)" }}>🤝 Log Debt Payment</h2>
             
             <form onSubmit={submitSettlement} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
               <div className="form-group" style={{ marginBottom: 0 }}>

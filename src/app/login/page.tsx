@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
-      <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>Redirecting to gateway portal...</p>
+      <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>Redirecting to SplitSync gateway...</p>
     </div>
   );
 }

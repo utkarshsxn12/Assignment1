@@ -209,7 +209,7 @@ export default function ImportPage() {
               width: "56px",
               height: "56px",
               borderRadius: "14px",
-              background: "rgba(99, 102, 241, 0.08)",
+              background: "rgba(79, 70, 229, 0.06)",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
@@ -218,7 +218,7 @@ export default function ImportPage() {
             }}>
               📥
             </div>
-            <h1 style={{ marginBottom: "0.75rem", fontSize: "2rem", fontWeight: 800, color: "white" }}>
+            <h1 style={{ marginBottom: "0.75rem", fontSize: "2rem", fontWeight: 800, color: "var(--text-primary)" }}>
               Interactive CSV Importer
             </h1>
             <p style={{ color: "var(--text-secondary)", marginBottom: "2.5rem", maxWidth: "600px", margin: "0 auto 2.5rem", lineHeight: "1.6" }}>
@@ -232,7 +232,7 @@ export default function ImportPage() {
                 style={{ padding: "0.75rem 1.75rem", fontSize: "0.9rem", fontWeight: 600 }}
                 disabled={loading}
               >
-                {loading ? "Parsing spreadsheet..." : "⚡ Auto-Load & Stage `expenses_export.csv`"}
+                {loading ? "Parsing spreadsheet..." : "⚡ Auto-Load & Stage expenses_export.csv"}
               </button>
             </div>
           </div>
@@ -245,19 +245,19 @@ export default function ImportPage() {
             {/* Session Stats */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1rem" }}>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center" }}>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Spreadsheet File</div>
-                <div style={{ fontSize: "1.15rem", fontWeight: 700, marginTop: "6px", color: "white" }}>{session.filename}</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Spreadsheet File</div>
+                <div style={{ fontSize: "1.15rem", fontWeight: 750, marginTop: "6px", color: "var(--text-primary)" }}>{session.filename}</div>
               </div>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center", borderLeft: "4px solid var(--color-secondary)" }}>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Total Rows</div>
-                <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "white", marginTop: "4px" }}>{totalRows}</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Total Rows</div>
+                <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--text-primary)", marginTop: "4px" }}>{totalRows}</div>
               </div>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center", borderLeft: "4px solid var(--color-success)" }}>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Clean Rows</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Clean Rows</div>
                 <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--color-success)", marginTop: "4px" }}>{cleanRows}</div>
               </div>
               <div className="glass-card" style={{ padding: "1.25rem", textAlign: "center", borderLeft: "4px solid var(--color-warning)" }}>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em" }}>Anomaly Rows</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Anomaly Rows</div>
                 <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--color-warning)", marginTop: "4px" }}>{anomalyRows}</div>
               </div>
             </div>
@@ -266,7 +266,7 @@ export default function ImportPage() {
             <div className="glass-card" style={{ padding: "1.75rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.75rem", flexWrap: "wrap", gap: "1rem" }}>
                 <div>
-                  <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "white" }}>Staging Import Area</h2>
+                  <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--text-primary)" }}>Staging Import Area</h2>
                   <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Review parsed transactions, resolve duplicates, verify conversion rates, and import.</p>
                 </div>
                 <button 
@@ -307,11 +307,11 @@ export default function ImportPage() {
                               cursor: "pointer",
                               opacity: !isImporting ? 0.45 : 1,
                               textDecoration: !isImporting ? "line-through" : "none",
-                              background: isExpanded ? "rgba(99, 102, 241, 0.04)" : "transparent"
+                              background: isExpanded ? "rgba(99, 102, 241, 0.03)" : "transparent"
                             }}
                             onClick={() => setExpandedRow(isExpanded ? null : row.id)}
                           >
-                            <td style={{ fontWeight: 600, color: "var(--text-secondary)" }}>#{row.rowNumber}</td>
+                            <td style={{ fontWeight: 700, color: "var(--text-secondary)" }}>#{row.rowNumber}</td>
                             <td onClick={(e) => e.stopPropagation()}>
                               <input 
                                 type="checkbox" 
@@ -322,13 +322,13 @@ export default function ImportPage() {
                             </td>
                             <td>
                               {hasAnomalies && row.anomalies.some(a => a.field === "date") ? (
-                                <span style={{ color: "var(--color-warning)", fontWeight: 600 }}>{currentResolved.date}</span>
+                                <span style={{ color: "var(--color-warning)", fontWeight: 700 }}>{currentResolved.date}</span>
                               ) : (
                                 currentResolved.date
                               )}
                             </td>
                             <td>
-                              <div><strong style={{ color: "white" }}>{currentResolved.description}</strong></div>
+                              <div><strong style={{ color: "var(--text-primary)" }}>{currentResolved.description}</strong></div>
                               {currentResolved.notes && (
                                 <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "2px" }}>
                                   📝 {currentResolved.notes}
@@ -354,17 +354,17 @@ export default function ImportPage() {
                                 currentResolved.paidBy
                               )}
                             </td>
-                            <td style={{ textAlign: "right", fontWeight: 600 }} onClick={(e) => e.stopPropagation()}>
+                            <td style={{ textAlign: "right", fontWeight: 700 }} onClick={(e) => e.stopPropagation()}>
                               {currentResolved.currency === "USD" ? (
                                 <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                                  <span style={{ fontSize: "0.85rem", color: "var(--color-secondary)", fontWeight: 700 }}>
+                                  <span style={{ fontSize: "0.85rem", color: "var(--color-secondary)", fontWeight: 800 }}>
                                     ${(currentResolved.amount / 100).toFixed(2)}
                                   </span>
-                                  <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)" }}>
+                                  <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: 500 }}>
                                     ₹{((currentResolved.amount / 100) * currentResolved.exchangeRate).toFixed(0)}
                                   </span>
                                   <div style={{ display: "flex", alignItems: "center", gap: "4px", justifyContent: "flex-end", marginTop: "2px" }}>
-                                    <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", fontWeight: 500 }}>Rate:</span>
+                                    <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", fontWeight: 600 }}>Rate:</span>
                                     <input 
                                       type="number" 
                                       value={currentResolved.exchangeRate}
@@ -376,7 +376,7 @@ export default function ImportPage() {
                                   </div>
                                 </div>
                               ) : (
-                                <span style={{ color: "white" }}>₹{(currentResolved.amount / 100).toFixed(2)}</span>
+                                <span style={{ color: "var(--text-primary)" }}>₹{(currentResolved.amount / 100).toFixed(2)}</span>
                               )}
                             </td>
                             <td>
@@ -398,11 +398,11 @@ export default function ImportPage() {
                           
                           {/* Expanded Details Sub-Row */}
                           {isExpanded && (
-                            <tr style={{ background: "rgba(3, 7, 18, 0.45)" }}>
-                              <td colSpan={8} style={{ padding: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                            <tr style={{ background: "#f8fafc" }}>
+                              <td colSpan={8} style={{ padding: "1.5rem", borderBottom: "1px solid var(--border-color)" }}>
                                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                                   <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
-                                    <strong>Raw CSV Segment:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,0,0.3)", padding: "4px 8px", borderRadius: "6px", color: "var(--color-primary-hover)", border: "1px solid rgba(255,255,255,0.04)" }}>{row.rawLine}</code>
+                                    <strong>Raw CSV Segment:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "#ffffff", padding: "4px 8px", borderRadius: "6px", color: "var(--color-primary)", border: "1px solid var(--border-color)" }}>{row.rawLine}</code>
                                   </div>
                                   
                                   {hasAnomalies && (
@@ -417,11 +417,11 @@ export default function ImportPage() {
                                             color: a.severity === "error" ? "var(--color-error)" : "var(--color-warning)",
                                             padding: "10px 14px",
                                             borderRadius: "8px",
-                                            border: `1px solid ${a.severity === "error" ? "rgba(239,68,68,0.15)" : "rgba(245,158,11,0.15)"}`
+                                            border: `1px solid ${a.severity === "error" ? "rgba(225,29,72,0.15)" : "rgba(217,119,6,0.15)"}`
                                           }}
                                         >
                                           <strong>{a.type.toUpperCase()}:</strong> {a.message}
-                                          <div style={{ fontSize: "0.75rem", opacity: 0.85, marginTop: "4px", fontWeight: 600 }}>
+                                          <div style={{ fontSize: "0.75rem", opacity: 0.9, marginTop: "4px", fontWeight: 700 }}>
                                             💡 Proposed Action: {a.proposedResolution}
                                           </div>
                                         </div>
@@ -431,7 +431,7 @@ export default function ImportPage() {
                                   
                                   {row.splitDetails && (
                                     <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
-                                      <strong>Raw Split Details:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "rgba(0,0,0,0.15)", padding: "2px 6px", borderRadius: "4px" }}>{row.splitDetails || "None"}</code>
+                                      <strong>Raw Split Details:</strong> <code style={{ fontFamily: "var(--font-mono)", background: "#ffffff", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>{row.splitDetails || "None"}</code>
                                     </div>
                                   )}
                                 </div>
@@ -465,26 +465,26 @@ export default function ImportPage() {
                   <div style={{ fontSize: "2.25rem", fontWeight: 800, color: "var(--color-success)" }}>
                     {importStats.imported}
                   </div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em", marginTop: "4px" }}>
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em", marginTop: "4px" }}>
                     Imported Records
                   </div>
                 </div>
-                <div style={{ borderRight: "1px solid rgba(255,255,255,0.08)" }}></div>
+                <div style={{ borderRight: "1px solid var(--border-color)" }}></div>
                 <div>
                   <div style={{ fontSize: "2.25rem", fontWeight: 800, color: "var(--text-secondary)" }}>
                     {importStats.skipped}
                   </div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 600, letterSpacing: "0.05em", marginTop: "4px" }}>
+                  <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em", marginTop: "4px" }}>
                     Skipped Duplicates
                   </div>
                 </div>
               </div>
             </div>
 
-            <hr style={{ border: "none", borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "2rem" }} />
+            <hr style={{ border: "none", borderBottom: "1px solid var(--border-color)", marginBottom: "2rem" }} />
 
             <div>
-              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem", color: "white" }}>
+              <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem", color: "var(--text-primary)" }}>
                 📋 Import Audit Trail Report (JSON Format Available)
               </h2>
               
@@ -539,8 +539,8 @@ export default function ImportPage() {
                   <tbody>
                     {importReport.map((row, idx) => (
                       <tr key={idx}>
-                        <td style={{ fontWeight: 600, color: "var(--text-secondary)" }}>#{row.rowNumber}</td>
-                        <td><strong style={{ color: "white" }}>{row.description}</strong></td>
+                        <td style={{ fontWeight: 700, color: "var(--text-secondary)" }}>#{row.rowNumber}</td>
+                        <td><strong style={{ color: "var(--text-primary)" }}>{row.description}</strong></td>
                         <td>
                           {row.anomalies.length > 0 ? (
                             <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
@@ -551,11 +551,11 @@ export default function ImportPage() {
                               ))}
                             </div>
                           ) : (
-                            <span style={{ fontSize: "0.75rem", color: "var(--color-success)", fontWeight: 500 }}>None (Clean Transaction)</span>
+                            <span style={{ fontSize: "0.75rem", color: "var(--color-success)", fontWeight: 600 }}>None (Clean Transaction)</span>
                           )}
                         </td>
                         <td>
-                          <span style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "var(--text-secondary)", background: "rgba(255,255,255,0.03)", padding: "2px 6px", borderRadius: "4px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                          <span style={{ fontSize: "0.8rem", fontFamily: "var(--font-mono)", color: "var(--text-secondary)", background: "#f1f5f9", padding: "2px 6px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>
                             {row.actionTaken}
                           </span>
                         </td>
