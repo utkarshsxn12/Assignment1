@@ -283,77 +283,91 @@ export default function ExpensesPage() {
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         
         {/* Page Title & Quick Actions */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.25rem" }}>
           <div>
-            <h1 style={{ fontSize: "1.75rem", fontWeight: 800 }}>💸 Group Expenses</h1>
-            <p style={{ fontSize: "0.85rem", color: "var(--color-text-secondary)" }}>Log rent, dynamic utilities, trips, and payments</p>
+            <h1 style={{ fontSize: "1.85rem", fontWeight: 800 }}>💸 Group Expenses</h1>
+            <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: "2px" }}>
+              Log rent, household bills, split vacation bookings, and settle balances
+            </p>
           </div>
           
           <div style={{ display: "flex", gap: "10px" }}>
-            <button onClick={() => setShowAddModal(true)} className="btn btn-primary">
+            <button onClick={() => setShowAddModal(true)} className="btn btn-primary" style={{ fontWeight: 600 }}>
               ➕ Add Expense
             </button>
-            <button onClick={() => setShowSettleModal(true)} className="btn btn-secondary">
+            <button onClick={() => setShowSettleModal(true)} className="btn btn-secondary" style={{ fontWeight: 600 }}>
               🤝 Settle Debt
             </button>
-            <button onClick={() => setShowMemberSettings(prev => !prev)} className="btn btn-secondary">
-              ⚙️ Manage Membership
+            <button 
+              onClick={() => setShowMemberSettings(prev => !prev)} 
+              className="btn btn-secondary"
+              style={{ fontWeight: 600, borderColor: showMemberSettings ? "var(--color-primary-hover)" : "rgba(255,255,255,0.08)" }}
+            >
+              ⚙️ Timelines
             </button>
           </div>
         </div>
 
         {/* Dynamic Member Settings Panel (Sam / Meera join/leave tests) */}
         {showMemberSettings && (
-          <div className="glass-card" style={{ padding: "1.5rem" }}>
-            <h2 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem" }}>
+          <div className="glass-card" style={{ padding: "1.75rem", borderLeft: "4px solid var(--color-primary)" }}>
+            <h2 style={{ fontSize: "1.15rem", fontWeight: 700, marginBottom: "0.5rem" }}>
               ⚙️ House Membership Timelines (Dynamic Splits)
             </h2>
-            <p style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)", marginBottom: "1.5rem" }}>
-              Edit dates to simulate Meera leaving or Sam moving in. Balances and split eligibility will automatically recalculate.
+            <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
+              Edit dates to simulate Meera leaving or Sam moving in. Split eligibility will automatically adjust based on dates.
             </p>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
               
               {/* Member List */}
-              <div>
-                <table className="custom-table" style={{ fontSize: "0.85rem" }}>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Join Date</th>
-                      <th>Leave Date</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {members.map(m => (
-                      <tr key={m.id}>
-                        <td><strong>{m.user.name}</strong></td>
-                        <td>{m.joinDate.split("T")[0]}</td>
-                        <td>{m.leaveDate ? m.leaveDate.split("T")[0] : <span style={{ color: "var(--color-success)" }}>Active</span>}</td>
-                        <td>
-                          <button 
-                            onClick={() => handleEditMemberClick(m)}
-                            className="btn btn-secondary"
-                            style={{ fontSize: "0.75rem", padding: "4px 8px" }}
-                          >
-                            ✏️ Edit
-                          </button>
-                        </td>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div className="table-container">
+                  <table className="custom-table" style={{ fontSize: "0.85rem" }}>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Join Date</th>
+                        <th>Leave Date</th>
+                        <th style={{ textAlign: "right" }}>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {members.map(m => (
+                        <tr key={m.id}>
+                          <td><strong>{m.user.name}</strong></td>
+                          <td>{m.joinDate.split("T")[0]}</td>
+                          <td>
+                            {m.leaveDate ? (
+                              <span style={{ color: "var(--color-warning)" }}>{m.leaveDate.split("T")[0]}</span>
+                            ) : (
+                              <span className="badge badge-success" style={{ fontSize: "0.6rem", padding: "2px 6px" }}>Active</span>
+                            )}
+                          </td>
+                          <td style={{ textAlign: "right" }}>
+                            <button 
+                              onClick={() => handleEditMemberClick(m)}
+                              className="btn btn-secondary"
+                              style={{ fontSize: "0.75rem", padding: "4px 8px", borderRadius: "6px" }}
+                            >
+                              ✏️ Edit
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               {/* Edit Form */}
               {editingMemberId && (
-                <div className="glass-card" style={{ padding: "1.25rem", background: "rgba(255,255,255,0.01)" }}>
-                  <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "1rem" }}>
-                    Edit Timeline: {members.find(m => m.id === editingMemberId)?.user.name}
+                <div className="glass-card" style={{ padding: "1.5rem", background: "rgba(3, 7, 18, 0.4)", border: "1px solid rgba(255, 255, 255, 0.04)" }}>
+                  <h3 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "1.25rem", color: "var(--color-primary-hover)" }}>
+                    Update Timeline: {members.find(m => m.id === editingMemberId)?.user.name}
                   </h3>
-                  <form onSubmit={submitMemberUpdate}>
-                    <div className="form-group">
+                  <form onSubmit={submitMemberUpdate} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <div className="form-group" style={{ marginBottom: 0 }}>
                       <label className="form-label">Join Date</label>
                       <input 
                         type="date" 
@@ -363,7 +377,7 @@ export default function ExpensesPage() {
                         required
                       />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group" style={{ marginBottom: 0 }}>
                       <label className="form-label">Leave Date (Optional)</label>
                       <input 
                         type="date" 
@@ -371,17 +385,19 @@ export default function ExpensesPage() {
                         onChange={(e) => setEditLeaveDate(e.target.value)}
                         className="form-input"
                       />
-                      <span style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>Leave blank if currently active.</span>
+                      <span style={{ fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "4px", display: "block" }}>
+                        Leave blank if flatmate is currently active.
+                      </span>
                     </div>
-                    <div style={{ display: "flex", gap: "10px", marginTop: "1.25rem" }}>
-                      <button type="submit" className="btn btn-primary" style={{ padding: "6px 12px", fontSize: "0.8rem" }}>
-                        Save Timeline
+                    <div style={{ display: "flex", gap: "10px", marginTop: "0.5rem" }}>
+                      <button type="submit" className="btn btn-primary" style={{ padding: "6px 12px", fontSize: "0.8rem", flex: 1 }}>
+                        Save
                       </button>
                       <button 
                         type="button" 
                         onClick={() => setEditingMemberId("")} 
                         className="btn btn-secondary"
-                        style={{ padding: "6px 12px", fontSize: "0.8rem" }}
+                        style={{ padding: "6px 12px", fontSize: "0.8rem", flex: 1 }}
                       >
                         Cancel
                       </button>
@@ -396,13 +412,24 @@ export default function ExpensesPage() {
 
         {/* Expenses List */}
         {loading ? (
-          <div style={{ textAlign: "center", padding: "3rem" }}>
-            <span style={{ fontSize: "2rem" }}>⏳</span> Loading Expenses...
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "6rem 0", gap: "1rem" }}>
+            <div style={{
+              width: "32px",
+              height: "32px",
+              border: "3px solid rgba(255,255,255,0.08)",
+              borderTopColor: "var(--color-primary)",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite"
+            }} />
+            <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>Loading expense ledger...</p>
           </div>
         ) : expenses.length === 0 ? (
-          <div className="glass-card" style={{ padding: "3rem", textAlign: "center", color: "var(--color-text-secondary)" }}>
-            <span style={{ fontSize: "3rem" }}>💸</span>
-            <p style={{ marginTop: "1rem" }}>No expenses logged yet. Go ahead and log one, or import the CSV in the Import tab!</p>
+          <div className="glass-card" style={{ padding: "4rem 2rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+            <span style={{ fontSize: "2.5rem" }}>💸</span>
+            <h3 style={{ fontSize: "1.15rem", fontWeight: 700 }}>No Expenses Logged</h3>
+            <p style={{ color: "var(--text-secondary)", maxWidth: "450px", margin: "0 auto" }}>
+              There are no transactions in the ledger. You can log expenses manually, or head over to the Import page to parse the spreadsheet.
+            </p>
           </div>
         ) : (
           <div className="glass-card" style={{ padding: "1.5rem" }}>
@@ -410,12 +437,12 @@ export default function ExpensesPage() {
               <table className="custom-table">
                 <thead>
                   <tr>
-                    <th style={{ width: "120px" }}>Date</th>
+                    <th style={{ width: "110px" }}>Date</th>
                     <th>Description</th>
                     <th>Paid By</th>
-                    <th style={{ textAlign: "right" }}>Total Amount</th>
-                    <th>Split Details</th>
-                    <th>Participant Breakdown</th>
+                    <th style={{ textAlign: "right", width: "120px" }}>Total Amount</th>
+                    <th style={{ width: "110px" }}>Split Type</th>
+                    <th>Participant Shares</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -425,40 +452,42 @@ export default function ExpensesPage() {
                         key={expense.id}
                         style={expense.isSettlement ? { background: "rgba(16, 185, 129, 0.02)" } : {}}
                       >
-                        <td style={{ color: "var(--color-text-secondary)" }}>
+                        <td style={{ color: "var(--text-secondary)" }}>
                           {expense.date.split("T")[0]}
                         </td>
                         <td>
                           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                            {expense.isSettlement && <span className="badge badge-success">Payment</span>}
-                            <strong style={{ fontSize: "0.95rem" }}>{expense.description}</strong>
+                            {expense.isSettlement && <span className="badge badge-success" style={{ fontSize: "0.6rem", padding: "1px 5px" }}>Payment</span>}
+                            <strong style={{ fontSize: "0.925rem", color: "white" }}>{expense.description}</strong>
                           </div>
                           {expense.notes && (
-                            <div style={{ fontSize: "0.75rem", color: "var(--color-text-secondary)", marginTop: "2px" }}>
-                              {expense.notes}
+                            <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginTop: "2px" }}>
+                              📝 {expense.notes}
                             </div>
                           )}
                         </td>
                         <td><strong>{expense.paidBy.name}</strong></td>
-                        <td style={{ textAlign: "right", fontWeight: 700 }}>
+                        <td style={{ textAlign: "right", fontWeight: 700, fontSize: "0.925rem" }}>
                           ₹{(expense.amount / 100).toFixed(2)}
                         </td>
                         <td>
-                          <span className="badge badge-info">{expense.splitType}</span>
+                          <span className="badge badge-info" style={{ fontSize: "0.65rem", padding: "2px 6px" }}>{expense.splitType}</span>
                         </td>
-                        <td style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+                        <td style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                             {expense.splits.map(s => (
                               <span 
                                 key={s.id}
                                 style={{
                                   background: "rgba(255,255,255,0.03)",
-                                  padding: "2px 6px",
-                                  borderRadius: "4px",
-                                  border: "1px solid var(--border-glass)"
+                                  color: "white",
+                                  padding: "2px 8px",
+                                  borderRadius: "6px",
+                                  border: "1px solid rgba(255, 255, 255, 0.04)",
+                                  fontSize: "0.75rem"
                                 }}
                               >
-                                {s.user.name}: ₹{(s.amount / 100).toFixed(2)}
+                                {s.user.name}: <span style={{ fontWeight: 600 }}>₹{(s.amount / 100).toFixed(0)}</span>
                               </span>
                             ))}
                           </div>
@@ -478,28 +507,36 @@ export default function ExpensesPage() {
       {showAddModal && (
         <div style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-          background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)",
+          background: "rgba(0, 0, 0, 0.8)", backdropFilter: "blur(8px)",
           display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000,
           padding: "1rem"
         }}>
-          <div className="glass-card" style={{ padding: "2rem", width: "100%", maxWidth: "550px", maxHeight: "90vh", overflowY: "auto" }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1.5rem" }}>➕ Add New Group Expense</h2>
+          <div className="glass-card" style={{ 
+            padding: "2.25rem", 
+            width: "100%", 
+            maxWidth: "550px", 
+            maxHeight: "90vh", 
+            overflowY: "auto",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.6)"
+          }}>
+            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "1.5rem", color: "white" }}>➕ Add New Group Expense</h2>
             
-            <form onSubmit={submitExpense}>
-              <div className="form-group">
+            <form onSubmit={submitExpense} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Description</label>
                 <input 
                   type="text" 
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="form-input"
-                  placeholder="e.g. Electricity bill, Groceries, Dinner"
+                  placeholder="e.g. Electricity bill, Rent split, Swiggy dinner"
                   required
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                <div className="form-group">
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="form-label">Amount</label>
                   <input 
                     type="number" 
@@ -511,7 +548,7 @@ export default function ExpensesPage() {
                     required
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="form-label">Currency</label>
                   <select 
                     value={currency}
@@ -525,7 +562,7 @@ export default function ExpensesPage() {
               </div>
 
               {currency === "USD" && (
-                <div className="form-group">
+                <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="form-label">Exchange Rate (1 USD = X INR)</label>
                   <input 
                     type="number" 
@@ -538,8 +575,8 @@ export default function ExpensesPage() {
                 </div>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                <div className="form-group">
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="form-label">Paid By (Payer)</label>
                   <select 
                     value={paidById}
@@ -551,7 +588,7 @@ export default function ExpensesPage() {
                     ))}
                   </select>
                 </div>
-                <div className="form-group">
+                <div className="form-group" style={{ marginBottom: 0 }}>
                   <label className="form-label">Date</label>
                   <input 
                     type="date" 
@@ -563,7 +600,7 @@ export default function ExpensesPage() {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Split Type</label>
                 <select 
                   value={splitType}
@@ -578,8 +615,8 @@ export default function ExpensesPage() {
               </div>
 
               {/* Dynamic split inputs */}
-              <div className="form-group" style={{ background: "rgba(255,255,255,0.02)", padding: "1rem", borderRadius: "8px", border: "1px solid var(--border-glass)" }}>
-                <label className="form-label" style={{ marginBottom: "0.75rem", fontWeight: 700 }}>
+              <div className="form-group" style={{ marginBottom: 0, background: "rgba(3,7,18,0.4)", padding: "1.15rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.04)" }}>
+                <label className="form-label" style={{ marginBottom: "0.85rem", fontWeight: 700, color: "white" }}>
                   👥 Split With (Active Members on {date})
                 </label>
                 
@@ -588,17 +625,17 @@ export default function ExpensesPage() {
                     ⚠️ No active group members on this date! Adjust member settings.
                   </span>
                 ) : (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {activeMembers.map(m => {
                       const isChecked = !!selectedSplits[m.userId];
                       return (
                         <div key={m.userId} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", cursor: "pointer" }}>
+                          <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.85rem", cursor: "pointer", color: "white" }}>
                             <input 
                               type="checkbox" 
                               checked={isChecked}
                               onChange={() => handleSplitCheckboxChange(m.userId)}
-                              style={{ width: "16px", height: "16px" }}
+                              style={{ width: "16px", height: "16px", cursor: "pointer" }}
                             />
                             {m.user.name}
                           </label>
@@ -613,10 +650,10 @@ export default function ExpensesPage() {
                                 value={splitValues[m.userId] || ""}
                                 onChange={(e) => handleSplitValueChange(m.userId, e.target.value)}
                                 className="form-input"
-                                style={{ width: "80px", padding: "4px 8px", fontSize: "0.8rem", textAlign: "right" }}
+                                style={{ width: "85px", padding: "4px 8px", fontSize: "0.8rem", textAlign: "right" }}
                                 required
                               />
-                              <span style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
+                              <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", minWidth: "45px" }}>
                                 {splitType === "unequal" ? "₹" : splitType === "percentage" ? "%" : "shares"}
                               </span>
                             </div>
@@ -628,7 +665,7 @@ export default function ExpensesPage() {
                 )}
               </div>
 
-              <div className="form-group">
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Notes (Optional)</label>
                 <textarea 
                   value={notes}
@@ -639,8 +676,8 @@ export default function ExpensesPage() {
                 />
               </div>
 
-              <div style={{ display: "flex", gap: "10px", marginTop: "1.5rem" }}>
-                <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
+              <div style={{ display: "flex", gap: "10px", marginTop: "1.25rem" }}>
+                <button type="submit" className="btn btn-primary" style={{ flex: 1, fontWeight: 600 }}>
                   Create Expense
                 </button>
                 <button 
@@ -661,15 +698,21 @@ export default function ExpensesPage() {
       {showSettleModal && (
         <div style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-          background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)",
+          background: "rgba(0, 0, 0, 0.8)", backdropFilter: "blur(8px)",
           display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000,
           padding: "1rem"
         }}>
-          <div className="glass-card" style={{ padding: "2rem", width: "100%", maxWidth: "450px" }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginBottom: "1.5rem" }}>🤝 Log Debt Payment</h2>
+          <div className="glass-card" style={{ 
+            padding: "2rem", 
+            width: "100%", 
+            maxWidth: "450px",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.6)"
+          }}>
+            <h2 style={{ fontSize: "1.35rem", fontWeight: 800, marginBottom: "1.5rem", color: "white" }}>🤝 Log Debt Payment</h2>
             
-            <form onSubmit={submitSettlement}>
-              <div className="form-group">
+            <form onSubmit={submitSettlement} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Who Paid? (Payer)</label>
                 <select 
                   value={settlePayer}
@@ -682,7 +725,7 @@ export default function ExpensesPage() {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Who Received? (Recipient)</label>
                 <select 
                   value={settleRecipient}
@@ -695,7 +738,7 @@ export default function ExpensesPage() {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Amount (₹)</label>
                 <input 
                   type="number" 
@@ -708,7 +751,7 @@ export default function ExpensesPage() {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Date</label>
                 <input 
                   type="date" 
@@ -719,8 +762,8 @@ export default function ExpensesPage() {
                 />
               </div>
 
-              <div style={{ display: "flex", gap: "10px", marginTop: "1.5rem" }}>
-                <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
+              <div style={{ display: "flex", gap: "10px", marginTop: "1.25rem" }}>
+                <button type="submit" className="btn btn-primary" style={{ flex: 1, fontWeight: 600 }}>
                   Log Payment
                 </button>
                 <button 
