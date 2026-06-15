@@ -3,7 +3,7 @@
 SplitSync is a relational, full-stack shared expenses web application built to ingest, staging-analyze, and resolve messy shared house spreadsheets. It satisfies the unique requirements of Aisha, Rohan, Priya, Meera, and Sam.
 
 ## 🔗 Live Application & Codebase
-* **Deployed URL:** (Deployable to Vercel/Render with local SQLite or postgres, setup instructions below)
+* **Deployed URL:** https://splitsync-gnmb.onrender.com
 * **GitHub Repository:** https://github.com/utkarshsxn12/Assignment1
 
 ---
